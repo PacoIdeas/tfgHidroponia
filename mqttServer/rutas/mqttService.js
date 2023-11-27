@@ -29,7 +29,7 @@ const t_camara_res = "PICTURE";
 const t_camara_pet = "TakeAPicture";
 const t_hum_temp = "hum_temp_amb";
 const t_hum_temp_amb_res = "hum_temp_amb_res"
-const topics = ["topic/ejemplo",t_camara_res,t_camara_pet,t_hum_temp,t_hum_temp_amb_res]
+const topics = ["topic/ejemplo",t_camara_res,t_camara_pet,t_hum_temp,t_hum_temp_amb_res]//////S
 //publica TakeAPicture  ->  ESP32-CAM publica en PICTURE una foto 
 
 
