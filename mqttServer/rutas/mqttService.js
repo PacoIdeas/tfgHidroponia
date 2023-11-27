@@ -19,7 +19,7 @@ server.listen(port, () => {
 const brokerUrl = 'mqtt://192.168.100.115'; // Dirección del broker MQTT
 // const options = {
 //   clientId: 'nodejs-client', // Identificador del cliente
-//   username: 'tu_usuario', // Usuario (si es necesario)
+//   username: 'tu_usuario', // Usuario (si es necesario)sadasd
 //   password: 'tu_contraseña' // Contraseña (si es necesario)
 // };
 
