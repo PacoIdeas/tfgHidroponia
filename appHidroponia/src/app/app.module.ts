@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 
+
+import { HttpClientModule } from '@angular/common/http';
 ///////importar si son necesarios
 import { TableModule } from 'primeng/table';
 import { MenuModule } from 'primeng/menu';
@@ -45,9 +47,11 @@ import { FilterService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
@@ -58,7 +62,9 @@ import { FilterService } from 'primeng/api';
     ToastModule
 
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

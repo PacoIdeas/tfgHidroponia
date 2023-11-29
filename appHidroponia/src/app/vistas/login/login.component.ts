@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/modelos/usuario';
 
 import { AutentificacionService } from 'src/app/servicios/autentificacion.service';
 
+import { LoginModule } from './login.module';
 
 @Component({
   selector: 'app-login',
