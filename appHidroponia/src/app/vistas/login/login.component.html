@@ -1,0 +1,34 @@
+
+<p-panel header="" [toggleable]="false" [style]="{width: '60%', margin: '0 auto'}">
+  <!-- <p-toast></p-toast> -->
+  <ng-template pTemplate="header">
+      <span class="text-primary font-semibold text-xl">Hidroponic App</span>
+  </ng-template>
+  <tr>Ya tienes una cuenta registrada? </tr>
+   Accede!
+  <ng-template pTemplate="footer"> Acceso para usuarios. </ng-template>
+
+  <div class="flex flex-column md:flex-row">
+      <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
+          <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+              <label class="w-6rem">Username</label>
+              <input pInputText  [(ngModel)]="imput_username" type="text" class="w-12rem" />
+          </div>
+          <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+              <label class="w-6rem">Password</label>
+              <input pInputText  [(ngModel)]="imput_password" type="password" class="w-12rem" />
+          </div>
+          <p-button label="Login" icon="pi pi-user" styleClass="w-10rem mx-auto" (click)="login()"></p-button>
+      </div>
+      <div class="w-full md:w-2">
+          <p-divider layout="vertical" styleClass="hidden md:flex" [align]="'center'"><b>OR</b></p-divider>
+          <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'"><b>OR</b></p-divider>
+      </div>
+      Eres nuevo por aqui? Registrate!
+      <div class="w-full md:w-5 flex align-items-center ">
+          <p-button label="Sign Up" icon="pi pi-user-plus" styleClass="p-button-success w-10rem"  (click)="PopUpSignUp(true)" ></p-button>
+      </div>
+  </div>
+
+
+</p-panel>
