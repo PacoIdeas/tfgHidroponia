@@ -8,6 +8,12 @@ import { Usuario } from '../modelos/usuario';
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 
+
+
+import { JwtHelperService } from "@auth0/angular-jwt";
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,17 +34,34 @@ export class AutentificacionService {
   usuario: Usuario = {
     username: null,
     password: null,
-    id_usuario: 0
+    id_usuario: 0,
+    roll: null
   }
 
-  constructor(private http: HttpClient, private cookies: CookieService, private router: Router) { }
+  constructor(private http: HttpClient, private cookies: CookieService, private router: Router, public jwtHelper: JwtHelperService) { }
 
 
   login(user: Usuario): Observable<any> {
-    return this.http.post(this.API_URI +"/login", user);
+    return this.http.post<Usuario>( this.API_URI +"/login", user);
   }
 
 
+
+  postRegister(user: Usuario): Observable<any>{
+    console.log("intento registro");
+
+    let headers = new HttpHeaders();
+
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.post(this.API_URI +"/register", JSON.stringify(user), {headers: headers});
+
+  }
+
+
+  public isAuthenticated (): Boolean {
+    const token = this.getToken();
+    return !this.jwtHelper.isTokenExpired(token); //comprueba si el token esta caducado y devuelve true/false
+  }
 
 
   //Guardar token en cookies

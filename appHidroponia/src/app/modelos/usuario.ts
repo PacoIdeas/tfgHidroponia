@@ -7,7 +7,7 @@ export class Usuario {
 
   username: string | null;
   password: string | null;
-
+  roll: string | null;
 
 
   id_usuario: number = 0;
@@ -19,7 +19,7 @@ export class Usuario {
     this.username = null;
     this.password = null;
     this.id_usuario = 0;
-
+    this.roll = null;
   }
 
 

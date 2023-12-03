@@ -9,6 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+
+import { CookieService } from "ngx-cookie-service";
 
 import { HttpClientModule } from '@angular/common/http';
 ///////importar si son necesarios
@@ -28,13 +31,14 @@ import { ChartModule } from 'primeng/chart';
 import { CalendarModule } from 'primeng/calendar';
 import { PaginatorModule } from 'primeng/paginator';
 import { SpeedDialModule } from 'primeng/speeddial';
-//import { CookieService } from "ngx-cookie-service";
 import { SidebarModule } from 'primeng/sidebar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ImageModule } from 'primeng/image';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FilterService } from 'primeng/api';
+import { UserComponent } from './vistas/user/user.component';
+import { AdminComponent } from './vistas/admin/admin.component';
 
 
 //////////////////////////////////
@@ -42,11 +46,11 @@ import { FilterService } from 'primeng/api';
 
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
+    UserComponent,
+    AdminComponent,
 
   ],
   imports: [
@@ -55,15 +59,27 @@ import { FilterService } from 'primeng/api';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-
+    MenubarModule,
     ButtonModule,
     DividerModule,
     PanelModule,
-    ToastModule
+    ToastModule,
+    SidebarModule,
+    JwtModule.forRoot({
+      config: {
+        // Configuración opcional para el manejo de tokens JWT, si es necesario
+      },
+    }),
 
   ],
   providers: [
-    MessageService
+    MessageService,
+    CookieService,
+    JwtHelperService,
+    ConfirmationService,
+    FilterService,
+    UserComponent
+
   ],
   bootstrap: [AppComponent]
 })

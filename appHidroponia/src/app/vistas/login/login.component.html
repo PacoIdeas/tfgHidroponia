@@ -1,6 +1,6 @@
 
 <p-panel header="" [toggleable]="false" [style]="{width: '60%', margin: '0 auto'}">
-  <!-- <p-toast></p-toast> -->
+  <p-toast></p-toast>
   <ng-template pTemplate="header">
       <span class="text-primary font-semibold text-xl">Hidroponic App</span>
   </ng-template>
@@ -9,7 +9,7 @@
   <ng-template pTemplate="footer"> Acceso para usuarios. </ng-template>
 
   <div class="flex flex-column md:flex-row">
-      <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
+      <div class="w-full md:w-5 flex flex-column align-items-center  justify-content-center gap-3 py-5">
           <div class="flex flex-wrap justify-content-center align-items-center gap-2">
               <label class="w-6rem">Username</label>
               <input pInputText  [(ngModel)]="imput_username" type="text" class="w-12rem" />
@@ -32,3 +32,35 @@
 
 
 </p-panel>
+
+
+
+
+<p-dialog  header="Sign Up!" [responsive]="true" [style]="{width: '400px'}" [(visible)]="mostrar_Registro" [modal]="true">
+  <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12">
+          <div class="ui-g-4">
+              <label for="Username"> username </label>
+          </div>
+          <div class="ui-g-8">
+              <input pInputText id="Username" [(ngModel)]= "autentificacionService.usuario.username" />
+          </div>
+      </div>
+      <div class="ui-g-12">
+          <div class="ui-g-4">
+              <label for="password">password</label>
+          </div>
+          <div class="ui-g-8">
+              <input pInputText id="Password" type="password" [(ngModel)]= "autentificacionService.usuario.password" />
+          </div>
+      </div>
+
+  </div>
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
+          <button type="button" pButton  (click)="SignUp(autentificacionService.usuario)" label="Registrarme "></button>
+      </div>
+  </p-footer>
+</p-dialog>

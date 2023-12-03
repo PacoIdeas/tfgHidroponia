@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit{
   token: any;
 
 
-
+  mostrar_Registro: boolean = false;
 
 
 
@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit{
 
 
 
-  PopUpSignUp(arg0: boolean) {
-  throw new Error('Method not implemented.');
+  PopUpSignUp(val: boolean) {
+    this.mostrar_Registro = val;
   }
 
 
@@ -77,16 +77,18 @@ export class LoginComponent implements OnInit{
               (decodedToken) => {
 
                 console.log('Token decodificado:', decodedToken);
-                // console.log('Datos del token decodificado:', decodedToken);
-                // this.usuario.id_usuario = decodedToken.datos_token.id_usuario
-                // this.usuario.id_roll = decodedToken.datos_token.id_roll
-                // if(this.usuario.id_roll == 3){ //administrador
+                console.log('Datos del token decodificado:', decodedToken);
+                this.autentificacionService.usuario.username = decodedToken.datos_token.username
+                this.autentificacionService.usuario.roll = decodedToken.datos_token.roll
+                if(this.autentificacionService.usuario.roll == "admin"){ //administrador
+                  this.router.navigateByUrl("/admin");
 
-                this.router.navigateByUrl("/");
+                }else if(this.autentificacionService.usuario.roll == "user"){ // usuario o gestor
+                  this.router.navigateByUrl("/user");
+                }
 
-                // }else if((this.usuario.id_roll == 1) || (this.usuario.id_roll == 2)){ // usuario o gestor
-                //   this.router.navigateByUrl("/cliente");
-                // }
+
+
               },
               (error) => {
                 console.error('Error al decodificar el token en el backend:', error);
@@ -106,12 +108,48 @@ export class LoginComponent implements OnInit{
         console.error("Error en la solicitud de inicio de sesión:", error);
       });
 
-
-
-
   }
 
 
+
+
+
+  SignUp(usuario: Usuario){ //
+
+
+    this.autentificacionService.postRegister(usuario).subscribe((result: any) => {
+
+      if((result.minutos_Restantes>0)||(result.segundos_Restantes>=0)){
+        console.log("IpBloqueada");
+
+         this.messageService.add({severity : 'error', summary: "Error!", detail: "Se han acabado los intentos disponibles. Tiempo de espera: "+result.minutos_Restantes+"minutos, "+result.segundos_Restantes+"segundos." });
+       }
+
+      this.autentificacionService.setToken(result.token);
+
+      if(result.pin_clientes>=0){
+        this.messageService.add({severity : 'error', summary: "Error!", detail: "El pin  "+result.pin_clientes+" No esta asociado a ningun cliente existente." });
+
+      }
+
+      if((result.accede == false)){
+
+        this.messageService.add({severity : 'error', summary: "Error!", detail: "Ya existe un usuario con este nombre" });
+      }
+      if ((result.token != null) && (result.token != undefined)){
+        this.messageService.add({severity :  'success', summary: "Resultado", detail: "Exito en el registro! redirigiendo..." });
+      }
+
+    },
+    (error) => {
+      console.error("Error en la solicitud de inicio de sesión:", error);
+    });
+    this.PopUpSignUp(false);
+    setTimeout(() => {
+      this.router.navigateByUrl("/user");          /////TODO
+    },1000);
+
+  }
 
 
 
