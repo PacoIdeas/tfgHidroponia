@@ -1,14 +1,16 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const autentificacion = express.Router();
-const moment = require('moment');
+
+const autentificacion = express.Router(); 
  
 const conectarBaseDeDatos =  require('./SQLite.js');
 
 const db = conectarBaseDeDatos();
 const util = require('util');
 const dbGetAsync = util.promisify(db.all).bind(db);
+
+
+
+const jwt = require('jsonwebtoken');
 
 
 
@@ -298,7 +300,7 @@ autentificacion.post('/register',async(req,res) =>{
             let hash_pass = sha256Hasher.update(req.body.password).digest("hex");
             let roll = "user";
             const query_login ="INSERT INTO Usuarios (username, password, roll) VALUES (?, ?,?);"
-            await db.all(query_login,[usuario.username, sha256Hasher.update(req.body.password).digest("hex"), roll], (err, rows) => {
+            await db.all(query_login,[usuario.username, hash_pass, roll], (err, rows) => {
                
                 if (err) {
                     console.error(err.message);

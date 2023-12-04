@@ -1,0 +1,14 @@
+
+
+<p-sidebar [(visible)]="this.sidebarService.sidebarVisible" >
+  <div class="card flex justify-content-center">
+
+    <p-dropdown [options]="this.sidebarService.cultivosDisponibles" [(ngModel)]="this.sidebarService.cultivoSeleccionado" optionLabel="Nombre" [style]="{'width': '100%'}" ></p-dropdown>
+
+  </div>
+  <div style="margin-top: 20px; border-top: 2px solid #2d2d2d;"></div>
+  <div class= ""></div>
+  <div class="sidebar-content margin-top: 20px">
+    <p-menu [model]="items" [style]= "{'width':'100%' , 'margin-top': '20px' }"></p-menu>
+  </div>
+</p-sidebar>

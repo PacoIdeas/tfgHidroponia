@@ -1,0 +1,11 @@
+/* Estilo para el contenido del sidebar */
+
+p-sidebar {
+  width: 250px; /* Define el ancho del sidebar */
+  height: 100%; /* Define la altura del sidebar */
+}
+
+.sidebar-content {
+  width: 100%; /* Ocupará todo el ancho del sidebar */
+  height: 100%; /* Ocupará todo el alto del sidebar */
+}

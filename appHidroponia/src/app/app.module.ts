@@ -39,10 +39,13 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FilterService } from 'primeng/api';
 import { UserComponent } from './vistas/user/user.component';
 import { AdminComponent } from './vistas/admin/admin.component';
-
-
+import { SidebarComponent } from './componentes/sidebar/sidebar.component';
+import { ComunesService } from './servicios/comunes.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { SidebarService } from './servicios/sidebar.service';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 //////////////////////////////////
-
+import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo.component';
 
 
 
@@ -51,6 +54,8 @@ import { AdminComponent } from './vistas/admin/admin.component';
     AppComponent,
     UserComponent,
     AdminComponent,
+    SidebarComponent,
+    NuevoCultivoComponent
 
   ],
   imports: [
@@ -65,6 +70,9 @@ import { AdminComponent } from './vistas/admin/admin.component';
     PanelModule,
     ToastModule,
     SidebarModule,
+    MenuModule,
+    DropdownModule,
+    ConfirmPopupModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario
@@ -78,7 +86,9 @@ import { AdminComponent } from './vistas/admin/admin.component';
     JwtHelperService,
     ConfirmationService,
     FilterService,
-    UserComponent
+    UserComponent,
+    ComunesService,
+    SidebarService
 
   ],
   bootstrap: [AppComponent]

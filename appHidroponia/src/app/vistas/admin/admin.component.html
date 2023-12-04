@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,17 +20,8 @@
 
       <div style="display: flex; justify-content: space-between;  ; padding: 5px;">
         <div style="align-self: flex-start;">
-          <p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right"  [style]="{background: 'black' }" ></p-button>
-            <p-sidebar [(visible)]="sidebarVisible">
-
-              <div class="card flex justify-content-center">
-                <p-toast></p-toast>
-              <!-- <p-menu [model]="items"></p-menu> -->
-              </div>
-
-
-
-            </p-sidebar>
+          <p-button (click)="this.sidebarService.sidebarVisible = !this.sidebarService.sidebarVisible" icon="pi pi-arrow-right"></p-button>
+          <app-sidebar> </app-sidebar>
         </div>
 
         <div style="align-self: center; display: flex; justify-content: space-between;  ; padding: 5px;">
