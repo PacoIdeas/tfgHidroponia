@@ -8,7 +8,7 @@ import { AuthGuardService } from './servicios/auth-guard.service';
 
 import { AdminComponent } from './vistas/admin/admin.component';
 
-
+import { AddEditCultivoComponent } from './vistas/add-edit-cultivo/add-edit-cultivo.component';
 
 
 
@@ -28,6 +28,11 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate:[AuthGuardService],
    },
+  {
+   path: "add-edit-cultivo",
+   component: AddEditCultivoComponent,
+   canActivate:[AuthGuardService],
+  },
    {path: '**', redirectTo: ''}
 ];
 

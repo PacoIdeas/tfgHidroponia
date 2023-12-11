@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ComunesService } from 'src/app/servicios/comunes.service';
 import { SidebarService } from 'src/app/servicios/sidebar.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-
+import { Router } from '@angular/router';
 import { Cultivo } from 'src/app/modelos/cultivo';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
 
   cultivosDisponibles!: any[];
   items: any = [];
 
 
-  constructor(public comunesService: ComunesService, public sidebarService: SidebarService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+
+  constructor(public comunesService: ComunesService, public sidebarService: SidebarService, private confirmationService: ConfirmationService, private messageService: MessageService,  public router: Router) {
 
   }
 
@@ -68,6 +69,7 @@ export class SidebarComponent implements OnInit{
                 icon: 'pi pi-info-circle',
                 command: () => {
                   //   this.update();
+                  this.sidebarService.sidebarVisible = false;
                 }
               },
               {
@@ -75,13 +77,17 @@ export class SidebarComponent implements OnInit{
                 icon: 'pi pi-info-circle',
                 command: () => {
                   //   this.delete();
+                  this.sidebarService.sidebarVisible = false;
                 }
               },
               {
                 label: 'Añadir/editar cultivo',
                 icon: 'pi pi-plus-circle',
                 command: () => {
-                  // this.update();
+
+                  this.router.navigateByUrl("add-edit-cultivo");         /////TODO
+                  this.sidebarService.sidebarVisible = false;
+
                 }
               },
               {
@@ -89,6 +95,7 @@ export class SidebarComponent implements OnInit{
                 icon: 'pi pi-trash',
                 command: () => {
                   //   this.delete();
+                  this.sidebarService.sidebarVisible = false;
                 }
               }
           ]
@@ -99,11 +106,19 @@ export class SidebarComponent implements OnInit{
               {
                   label: 'Niveles de alerta',
                   icon: 'pi pi-sliders-h',
+                  command: () => {
+                    //   this.delete();
+                    this.sidebarService.sidebarVisible = false;
+                  }
 
               },
               {
                   label: 'Programación horaria',
                   icon: 'pi pi-clock',
+                  command: () => {
+                    //   this.delete();
+                    this.sidebarService.sidebarVisible = false;
+                  }
 
               }
           ]

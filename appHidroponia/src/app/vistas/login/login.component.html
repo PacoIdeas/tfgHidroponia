@@ -16,7 +16,7 @@
           </div>
           <div class="flex flex-wrap justify-content-center align-items-center gap-2">
               <label class="w-6rem">Password</label>
-              <input pInputText  [(ngModel)]="imput_password" type="password" class="w-12rem" />
+              <input pInputText  [(ngModel)]="imput_password" type="password" class="w-12rem" (keyup.enter)="login()" />
           </div>
           <p-button label="Login" icon="pi pi-user" styleClass="w-10rem mx-auto" (click)="login()"></p-button>
       </div>

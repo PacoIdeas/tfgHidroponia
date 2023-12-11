@@ -37,15 +37,21 @@ import { ImageModule } from 'primeng/image';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FilterService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+//////////////////////////////////
+
+
+import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo.component';
+import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
+import { AddEditCultivoComponent } from './vistas/add-edit-cultivo/add-edit-cultivo.component';
 import { UserComponent } from './vistas/user/user.component';
 import { AdminComponent } from './vistas/admin/admin.component';
 import { SidebarComponent } from './componentes/sidebar/sidebar.component';
 import { ComunesService } from './servicios/comunes.service';
-import { DropdownModule } from 'primeng/dropdown';
 import { SidebarService } from './servicios/sidebar.service';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-//////////////////////////////////
-import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo.component';
+import { CultivosPredeterminadosComponent } from './componentes/cultivos-predeterminados/cultivos-predeterminados.component';
 
 
 
@@ -55,7 +61,10 @@ import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo
     UserComponent,
     AdminComponent,
     SidebarComponent,
-    NuevoCultivoComponent
+    NuevoCultivoComponent,
+    CabeceraComponent,
+    AddEditCultivoComponent,
+    CultivosPredeterminadosComponent
 
   ],
   imports: [
@@ -70,9 +79,12 @@ import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo
     PanelModule,
     ToastModule,
     SidebarModule,
+    TableModule,
     MenuModule,
     DropdownModule,
     ConfirmPopupModule,
+    DialogModule,
+    DynamicDialogModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario

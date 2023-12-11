@@ -31,10 +31,6 @@ export class AdminComponent implements OnInit{
   //   this.comunesService.sidebarVisible = !this.comunesService.sidebarVisible;
   // }
 
-  logOut(): void{
-    console.log("saliendo");
-    this.autentificacionService.salir();
-  }
 
 
 

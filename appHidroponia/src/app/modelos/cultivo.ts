@@ -3,20 +3,22 @@
 export class Cultivo {
 
   id_cultivo: number | null;
-  nombre: string | null;
-  niveles_ambientales: string | null;
-  niveles_SN: string | null;
-  fecha_creacion: Date | null;
+  Nombre: string | null;
+  imagen: string | null;
+  Niveles_ambientales: string | null;
+  Niveles_SN: string | null;
+  Fecha_Creacion: Date | null;
 
 
   // Constructor que acepta un argumento opcional de tipo number o string
   constructor(valor: null) {
 
-    this.nombre = null;
-    this.niveles_ambientales = null;
     this.id_cultivo = null;
-    this.niveles_SN = null;
-    this.fecha_creacion = null;
+    this.Nombre = null;
+    this.imagen = null;
+    this.Niveles_ambientales = null;
+    this.Niveles_SN = null;
+    this.Fecha_Creacion = null;
   }
 
 

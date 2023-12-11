@@ -27,6 +27,21 @@ Cultivos.get('/Cultivos', async (req, res) => {
 
 })
 
+Cultivos.get('/CultivosPredefinidos', async (req, res) => {
+
+    const query = "SELECT * FROM CultivosPredefinidos";
+    const rows = await dbGetAsync(query);
+
+    if (rows.length == 0) {
+        console.log("No hay registros");
+    }else{
+        console.log(rows);
+        
+        res.json(rows);
+    }
+
+})
+
 
 Cultivos.post('/Cultivos', async (req, res) => {
 

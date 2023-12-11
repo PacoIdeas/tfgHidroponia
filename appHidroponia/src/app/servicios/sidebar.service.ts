@@ -19,16 +19,23 @@ export class SidebarService {
 
 
   sidebarVisible: boolean = false;
-  cultivosDisponibles: Cultivo[] = [];
 
+  cultivosPredefinidos: Cultivo[] = [];
+  cultivosDisponibles: Cultivo[] = [];
   cultivoSeleccionado = this.cultivosDisponibles[0];
 
 
   constructor(private http: HttpClient, private router: Router) { }
 
 
+
   getCultivos(): Observable<Cultivo[]> {
     return this.http.get<Cultivo[]>(this.API_URI + "/cultivos");
+  }
+
+
+  getCultivosPredefinidos(): Observable<Cultivo[]> {
+    return this.http.get<Cultivo[]>(this.API_URI + "/CultivosPredefinidos");
   }
 
   add_eddit_cultivo(cultivo: Cultivo) {
@@ -40,7 +47,6 @@ export class SidebarService {
 
     return this.http.delete<Cultivo>(this.API_URI + "/cultivos/" + cultivo.id_cultivo);
   }
-
 
 
 
