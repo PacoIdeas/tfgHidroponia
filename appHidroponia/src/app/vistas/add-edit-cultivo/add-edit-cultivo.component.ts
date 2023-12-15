@@ -29,6 +29,7 @@ export class AddEditCultivoComponent implements OnInit{
 
   cols!: any[];
 
+  dialogo_editar_cultivo!: boolean;
 
   constructor(public comunesService: ComunesService, public sidebarService: SidebarService, private confirmationService: ConfirmationService,public dialogService: DialogService,  private messageService: MessageService,  public router: Router) {
 
@@ -77,6 +78,36 @@ export class AddEditCultivoComponent implements OnInit{
 
   }
 
+
+
+  Dialog_edit_cultivo(cultivo: Cultivo) {
+
+    this.sidebarService.cultivoSeleccionado = cultivo;
+
+    if(!this.dialogo_editar_cultivo){
+      this.dialogo_editar_cultivo = true;
+    }else{
+      this.dialogo_editar_cultivo = false;
+    }
+  }
+
+  editar_cultivo(cultivo: Cultivo) {
+    this.sidebarService.cultivoSeleccionado = cultivo;
+    this.sidebarService.add_eddit_cultivo(cultivo).subscribe(
+      data => {
+        this.sidebarService.cultivosDisponibles[this.sidebarService.cultivosDisponibles.indexOf(cultivo)] = data;
+      }
+    )
+    this.Dialog_edit_cultivo(cultivo);
+
+  }
+
+  ver_parametros(cultivo: Cultivo) {
+    this.sidebarService.cultivoSeleccionado = cultivo;
+    this.router.navigateByUrl("parametros");
+  }
+
+
   eliminarCultivo(cultivo: Cultivo) {
     this.sidebarService.delete_cultivo(cultivo).subscribe(
       data => {
@@ -107,8 +138,11 @@ export class AddEditCultivoComponent implements OnInit{
 
 
   ngOnInit() {
+    this.dialogo_editar_cultivo = false;
+    setTimeout(() => {
+      this.obtenerCultivos();
+    },1000);
 
-    this.obtenerCultivos();
 
     this.cols = [
         { field: 'id_cultivo', header: 'ID' },

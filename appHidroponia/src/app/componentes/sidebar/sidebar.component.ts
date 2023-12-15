@@ -33,10 +33,6 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  edit_add_cultivo(cultivo: any){
-
-
-  }
 
   elimina_cultivo(cultivo: any){
     this.sidebarService.cultivoSeleccionado = new Cultivo(null);
@@ -81,8 +77,8 @@ export class SidebarComponent implements OnInit {
                 }
               },
               {
-                label: 'Añadir/editar cultivo',
-                icon: 'pi pi-plus-circle',
+                label: 'Editar cultivo',
+                icon: 'pi pi-pencil',
                 command: () => {
 
                   this.router.navigateByUrl("add-edit-cultivo");         /////TODO
@@ -90,14 +86,7 @@ export class SidebarComponent implements OnInit {
 
                 }
               },
-              {
-                label: 'Borrar cultivo',
-                icon: 'pi pi-trash',
-                command: () => {
-                  //   this.delete();
-                  this.sidebarService.sidebarVisible = false;
-                }
-              }
+
           ]
       },
       {

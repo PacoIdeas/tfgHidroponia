@@ -40,6 +40,8 @@ import { FilterService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CardModule } from 'primeng/card';
+import { TreeTableModule } from 'primeng/treetable';
 //////////////////////////////////
 
 
@@ -52,6 +54,7 @@ import { SidebarComponent } from './componentes/sidebar/sidebar.component';
 import { ComunesService } from './servicios/comunes.service';
 import { SidebarService } from './servicios/sidebar.service';
 import { CultivosPredeterminadosComponent } from './componentes/cultivos-predeterminados/cultivos-predeterminados.component';
+import { ParametrosComponent } from './vistas/parametros/parametros.component';
 
 
 
@@ -64,7 +67,8 @@ import { CultivosPredeterminadosComponent } from './componentes/cultivos-predete
     NuevoCultivoComponent,
     CabeceraComponent,
     AddEditCultivoComponent,
-    CultivosPredeterminadosComponent
+    CultivosPredeterminadosComponent,
+    ParametrosComponent
 
   ],
   imports: [
@@ -73,6 +77,7 @@ import { CultivosPredeterminadosComponent } from './componentes/cultivos-predete
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    TreeTableModule,
     MenubarModule,
     ButtonModule,
     DividerModule,
@@ -82,10 +87,12 @@ import { CultivosPredeterminadosComponent } from './componentes/cultivos-predete
     TableModule,
     ConfirmDialogModule,
     MenuModule,
+    CardModule,
     DropdownModule,
     ConfirmPopupModule,
     DialogModule,
     DynamicDialogModule,
+    CalendarModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario

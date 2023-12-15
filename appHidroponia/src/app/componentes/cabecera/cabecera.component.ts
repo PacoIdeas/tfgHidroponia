@@ -30,7 +30,16 @@ export class CabeceraComponent implements OnInit{
   }
 
   home(): void{
+
+  let token = this.autentificacionService.getToken()
+
+
+  this.autentificacionService.decode_token(token).subscribe((data: any) => {
+    this.autentificacionService.usuario = data.datos_token;
+
     this.router.navigateByUrl("/"+this.autentificacionService.usuario.roll);
+  })
+
   }
 
 

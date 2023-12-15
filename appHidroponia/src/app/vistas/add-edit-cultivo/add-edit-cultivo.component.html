@@ -1,7 +1,7 @@
 
 <app-cabecera></app-cabecera>
 
-<div class="card flex justify-content-center">
+<div class="card flex justify-content-center ">
   <p-panel header="Cultivos en marcha">
 
     <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text" ></p-confirmDialog>
@@ -14,14 +14,13 @@
                       {{ col.header }}
                   </th>
                   <th pSortableColumn="imagen">Image</th>
-                  <th></th>
-                  <th></th>
+
                   <th>
 
-                  <div class="card flex justify-content-center">
+
 
                     <p-button (click)="mostrarCultivosPredefinidos()" icon="pi pi-plus-circle" label="añadir cultivo"></p-button>
-                  </div>
+
                   </th>
 
 
@@ -29,21 +28,22 @@
           </ng-template>
           <ng-template pTemplate="body" let-cultivo let-columns="columns">
               <tr>
-                  <td *ngFor="let col of columns">
-                      {{ cultivo[col.field] }}
-                  </td>
-                  <td><img src="../../assets/imagenes/{{ cultivo.imagen }}" [alt]="cultivo.imagen" class="w-4rem h-4rem shadow-2"/></td>
-                  <td></td>
-                  <td>
-                    <p-toast></p-toast>
-                    <p-button (click)="confirmDelete(cultivo)" icon="pi pi-trash" severity="danger"  ></p-button>
+                <td *ngFor="let col of columns">
+                    {{ cultivo[col.field] }}
+                </td>
+                <td><img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-4rem h-4rem shadow-2"/></td>
+
+                <td>
+                  <p-button (click)="Dialog_edit_cultivo(cultivo)" [text]="true" icon="pi pi-pencil" label="Edit"   ></p-button>
+
+                  <p-button [text]="true"  label="ver parametros" (click)="ver_parametros(cultivo)" [text]="true" [link]="true" severity="info"  [style]="{ 'margin-left': '10px' }"></p-button>
+                  <p-toast></p-toast>
+                  <p-button (click)="confirmDelete(cultivo)" icon="pi pi-times" [text]="true" [style]="{ 'margin-left': '10px' }"></p-button>
 
 
-                  </td>
+                </td>
 
-                  <td>
-                    <p-button [text]="true" [raised]="true" label="info" [rounded]="true" icon="pi pi-info" severity="info"  ></p-button>
-                  </td>
+
 
 
 
@@ -53,7 +53,61 @@
       </p-table>
   </div>
 
+
+  <p-dialog  *ngIf="this.sidebarService.cultivoSeleccionado" header="Edicion del cultivo" [closable]="false" [(visible)]="dialogo_editar_cultivo" [style]="{width: '25%'}">
+
+
+
+
+    <div class="card flex justify-content-center ">
+
+      <img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-8rem h-8rem shadow-5"/>
+
+    </div>
+
+
+
+
+      <div class=" card p-fluid c" >
+
+
+
+      <div class="card flex justify-content-center">
+        <h5>Nombre</h5>
+      </div>
+      <div class="card flex justify-content-center">
+        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.Nombre" />
+      </div>
+
+      <div class="card flex justify-content-center">
+        <h5>Imagen</h5>
+      </div>
+      <div class=" card flex justify-content-center ">
+       <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.imagen"  />
+      </div>
+
+
+      <div class="card flex justify-content-center">
+        <h5>Fecha de creacion</h5>
+      </div>
+
+      <div class="card flex justify-content-center">
+        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.Fecha_Creacion" />
+      </div>
+
+
+      </div>
+    <ng-template pTemplate="footer">
+        <p-button label="Save" (click)="editar_cultivo(this.sidebarService.cultivoSeleccionado)" icon="pi pi-check"></p-button>
+        <p-button label="Cancel" (click)="this.dialogo_editar_cultivo=false" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+    </ng-template>
+
+
+
+  </p-dialog>
+
   </p-panel>
+
 
 
 </div>

@@ -1,0 +1,9 @@
+.calendar-container {
+  width: 70%; /* Ajusta el ancho del contenedor */
+  /* Otros estilos para el contenedor si es necesario */
+}
+
+.calendar-container p-calendar {
+  width: 10%; /* Hace que el calendario ocupe todo el ancho del contenedor */
+  max-width: 10%; /* Limita el ancho máximo al 100% del contenedor */
+}
