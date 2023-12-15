@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ComunesService } from 'src/app/servicios/comunes.service';
 import { SidebarService } from 'src/app/servicios/sidebar.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService,ConfirmEventType ,MessageService} from 'primeng/api';
 import { Router } from '@angular/router';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,7 +13,7 @@ import { Cultivo } from 'src/app/modelos/cultivo';
   selector: 'app-add-edit-cultivo',
   templateUrl: './add-edit-cultivo.component.html',
   styleUrls: ['./add-edit-cultivo.component.css'],
-  providers: [DialogService, MessageService]
+  providers: [DialogService]
 
 })
 
@@ -78,15 +77,33 @@ export class AddEditCultivoComponent implements OnInit{
 
   }
 
-  eliminarCultivo(){
-    this.sidebarService.delete_cultivo(this.sidebarService.cultivoSeleccionado).subscribe(
+  eliminarCultivo(cultivo: Cultivo) {
+    this.sidebarService.delete_cultivo(cultivo).subscribe(
       data => {
 
       }
     )
-    let indice =
-    this.sidebarService.cultivosDisponibles.
+      setTimeout(() => {
+        this.obtenerCultivos()
+      }, 400);
   }
+
+  confirmDelete(cultivo: Cultivo) {
+
+    this.confirmationService.confirm({
+        message: '¿Deseas eliminar este cultivo?',
+        header: 'Confirmar',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.eliminarCultivo(cultivo);
+        },
+        reject: () => {
+
+
+        },
+    });
+  };
+
 
 
   ngOnInit() {
@@ -96,6 +113,7 @@ export class AddEditCultivoComponent implements OnInit{
     this.cols = [
         { field: 'id_cultivo', header: 'ID' },
         { field: 'Nombre', header: 'Nombre' },
+
         { field: 'Fecha_Creacion', header: 'Fecha de creacion' }
     ];
   }

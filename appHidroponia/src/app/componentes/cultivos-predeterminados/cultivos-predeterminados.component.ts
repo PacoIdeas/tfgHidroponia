@@ -30,10 +30,25 @@ export class CultivosPredeterminadosComponent {
   }
 
 
-  cultivoPredefinidoSeleccionado(cultivoPredefinidoSeleccionado: Cultivo){
-    this.sidebarService.cultivosDisponibles[this.sidebarService.cultivosDisponibles.length] = cultivoPredefinidoSeleccionado
-    this.sidebarService.add_eddit_cultivo(cultivoPredefinidoSeleccionado)
-    this.messageService.add({ severity: 'success', summary: 'Cultivo creado', detail: `Nombre: ${cultivoPredefinidoSeleccionado.Nombre}` });
+  cultivoPredefinidoSeleccionado(cultivoPredefSelec: Cultivo){
+    this.sidebarService.cultivosDisponibles[this.sidebarService.cultivosDisponibles.length] = cultivoPredefSelec
+    this.sidebarService.add_eddit_cultivo(cultivoPredefSelec).subscribe((res: any) => {
+
+    },error => {console.log(error);});
+
+    setTimeout(() => {
+      this.sidebarService.getCultivos().subscribe(
+        data => {
+          this.sidebarService.cultivosDisponibles = data;
+        }
+      )
+    }, 500);
+
+
+    this.messageService.add({ severity: 'success', summary: 'Cultivo creado', detail: `Nombre: ${cultivoPredefSelec.Nombre}` });
+
+
+
     this.addEditCultivoComponent.ref?.close();
 
 

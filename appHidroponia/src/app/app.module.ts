@@ -80,6 +80,7 @@ import { CultivosPredeterminadosComponent } from './componentes/cultivos-predete
     ToastModule,
     SidebarModule,
     TableModule,
+    ConfirmDialogModule,
     MenuModule,
     DropdownModule,
     ConfirmPopupModule,

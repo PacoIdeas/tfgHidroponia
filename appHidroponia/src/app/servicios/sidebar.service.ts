@@ -30,7 +30,7 @@ export class SidebarService {
 
 
   getCultivos(): Observable<Cultivo[]> {
-    return this.http.get<Cultivo[]>(this.API_URI + "/cultivos");
+    return this.http.get<Cultivo[]>(this.API_URI + "/Cultivos");
   }
 
 
@@ -38,14 +38,25 @@ export class SidebarService {
     return this.http.get<Cultivo[]>(this.API_URI + "/CultivosPredefinidos");
   }
 
-  add_eddit_cultivo(cultivo: Cultivo) {
-
-    return this.http.post<Cultivo>(this.API_URI + "/cultivos", cultivo);
+  add_eddit_cultivo(cultivo: Cultivo):Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.post<Cultivo>(this.API_URI + "/Cultivos",  JSON.stringify(cultivo), {headers: headers});
   }
 
   delete_cultivo(cultivo: Cultivo) {
+    const body = { id: cultivo.id_cultivo };
 
-    return this.http.delete<Cultivo>(this.API_URI + "/cultivos/" + cultivo.id_cultivo);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const options = {
+      headers: headers,
+      body: body,
+    };
+
+    return this.http.delete<Cultivo>(this.API_URI + "/Cultivos/",options );
   }
 
 

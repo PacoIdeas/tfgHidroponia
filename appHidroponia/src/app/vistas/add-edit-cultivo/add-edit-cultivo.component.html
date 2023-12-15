@@ -3,17 +3,28 @@
 
 <div class="card flex justify-content-center">
   <p-panel header="Cultivos en marcha">
+
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text" ></p-confirmDialog>
+
     <div class="card">
-      <p-table [columns]="cols" [value]="cultivos" [tableStyle]="{ 'min-width': '50rem' }">
+      <p-table [columns]="cols" [value]="this.sidebarService.cultivosDisponibles" [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header" let-columns>
               <tr>
                   <th *ngFor="let col of columns">
                       {{ col.header }}
                   </th>
+                  <th pSortableColumn="imagen">Image</th>
+                  <th></th>
+                  <th></th>
+                  <th>
+
                   <div class="card flex justify-content-center">
-                    <p-toast></p-toast>
+
                     <p-button (click)="mostrarCultivosPredefinidos()" icon="pi pi-plus-circle" label="añadir cultivo"></p-button>
-                </div>
+                  </div>
+                  </th>
+
+
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-cultivo let-columns="columns">
@@ -21,13 +32,27 @@
                   <td *ngFor="let col of columns">
                       {{ cultivo[col.field] }}
                   </td>
+                  <td><img src="../../assets/imagenes/{{ cultivo.imagen }}" [alt]="cultivo.imagen" class="w-4rem h-4rem shadow-2"/></td>
+                  <td></td>
                   <td>
-                    <p-button (click)="eliminarCultivo()" icon="pi pi-trash" ></p-button>
+                    <p-toast></p-toast>
+                    <p-button (click)="confirmDelete(cultivo)" icon="pi pi-trash" severity="danger"  ></p-button>
+
+
                   </td>
+
+                  <td>
+                    <p-button [text]="true" [raised]="true" label="info" [rounded]="true" icon="pi pi-info" severity="info"  ></p-button>
+                  </td>
+
+
+
+
               </tr>
           </ng-template>
       </p-table>
   </div>
+
   </p-panel>
 
 

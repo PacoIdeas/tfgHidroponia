@@ -2,8 +2,12 @@
 
 <p-sidebar [(visible)]="this.sidebarService.sidebarVisible" >
   <div class="card flex justify-content-center">
+  <img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
+  </div>
 
-    <p-dropdown [options]="this.sidebarService.cultivosDisponibles" [(ngModel)]="this.sidebarService.cultivoSeleccionado" optionLabel="Nombre" [style]="{'width': '100%'}" ></p-dropdown>
+  <div class="card flex justify-content-center ">
+
+    <p-dropdown [options]="this.sidebarService.cultivosDisponibles" [(ngModel)]="this.sidebarService.cultivoSeleccionado" optionLabel="Nombre" [style]="{'width': '100%', 'margin-top': '20px'}" ></p-dropdown>
 
   </div>
   <div style="margin-top: 20px; border-top: 2px solid #2d2d2d;"></div>
