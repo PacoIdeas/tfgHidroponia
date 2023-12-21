@@ -10,8 +10,8 @@ import { AdminComponent } from './vistas/admin/admin.component';
 
 import { AddEditCultivoComponent } from './vistas/add-edit-cultivo/add-edit-cultivo.component';
 import { ParametrosComponent } from './vistas/parametros/parametros.component';
-
-
+import { AlertasComponent } from './vistas/alertas/alertas.component';
+import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/programacion-horaria.component';
 
 
 
@@ -39,6 +39,17 @@ const routes: Routes = [
     component: ParametrosComponent,
     canActivate:[AuthGuardService],
    },
+   {
+    path: "alertas",
+    component: AlertasComponent,
+    canActivate:[AuthGuardService],
+   },
+  {
+   path: "programacion-horaria",
+   component: ProgramacionHorariaComponent,
+   canActivate:[AuthGuardService],
+  },
+
    {path: '**', redirectTo: ''}
 ];
 

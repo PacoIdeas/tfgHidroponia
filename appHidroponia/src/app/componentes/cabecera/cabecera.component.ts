@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AutentificacionService } from 'src/app/servicios/autentificacion.service';
 import { ComunesService } from 'src/app/servicios/comunes.service';
-import { SidebarService } from 'src/app/servicios/sidebar.service';
+import { CultivosService } from 'src/app/servicios/cultivos.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
@@ -18,7 +18,7 @@ export class CabeceraComponent implements OnInit{
 
 
 
-  constructor(private autentificacionService: AutentificacionService,private router: Router, private messageService: MessageService, public comunesService: ComunesService, public sidebarService: SidebarService) {
+  constructor(private autentificacionService: AutentificacionService,private router: Router, private messageService: MessageService, public comunesService: ComunesService, public cultivosService: CultivosService) {
 
 
   }

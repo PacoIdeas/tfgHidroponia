@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AutentificacionService } from 'src/app/servicios/autentificacion.service';
 import { ComunesService } from 'src/app/servicios/comunes.service';
-import { SidebarService } from 'src/app/servicios/sidebar.service';
+import { CultivosService } from 'src/app/servicios/cultivos.service';
 
 
 import { MessageService } from 'primeng/api';
@@ -20,16 +20,29 @@ export class AdminComponent implements OnInit{
 
 
 
-  constructor(private autentificacionService: AutentificacionService, private messageService: MessageService, public comunesService: ComunesService, public sidebarService: SidebarService) {
+  constructor(private autentificacionService: AutentificacionService, private messageService: MessageService, public comunesService: ComunesService, public cultivosService: CultivosService) {
 
 
   }
 
 
-  // mostrar_sidebar(){
 
-  //   this.comunesService.sidebarVisible = !this.comunesService.sidebarVisible;
-  // }
+  inicializa_cultivos(){
+
+
+    this.cultivosService.getCultivos().subscribe((data: any[]) => {
+
+      if(data != null){
+        this.cultivosService.cultivosDisponibles = data;
+        this.cultivosService.cultivoSeleccionado = this.cultivosService.cultivosDisponibles[0];
+
+
+      }
+
+
+    });
+
+  }
 
 
 
@@ -38,6 +51,9 @@ export class AdminComponent implements OnInit{
 
 
   ngOnInit() {
+    this.inicializa_cultivos();
+
+
 
   }
 

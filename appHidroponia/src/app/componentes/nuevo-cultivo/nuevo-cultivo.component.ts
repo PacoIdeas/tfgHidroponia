@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComunesService } from 'src/app/servicios/comunes.service';
-import { SidebarService } from 'src/app/servicios/sidebar.service';
+import { CultivosService } from 'src/app/servicios/cultivos.service';
 
 import { Cultivo } from 'src/app/modelos/cultivo';
 
@@ -24,7 +24,7 @@ export class NuevoCultivoComponent implements OnInit {
 
 
 
-  constructor(public comunesService: ComunesService, public sidebarService: SidebarService) {
+  constructor(public comunesService: ComunesService, public cultivosService: CultivosService) {
 
   }
 

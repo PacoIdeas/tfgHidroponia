@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ComunesService } from 'src/app/servicios/comunes.service';
-import { SidebarService } from 'src/app/servicios/sidebar.service';
+import { CultivosService } from 'src/app/servicios/cultivos.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -18,25 +18,15 @@ export class SidebarComponent implements OnInit {
 
 
 
-  constructor(public comunesService: ComunesService, public sidebarService: SidebarService, private confirmationService: ConfirmationService, private messageService: MessageService,  public router: Router) {
+  constructor(public comunesService: ComunesService, public cultivosService: CultivosService, private confirmationService: ConfirmationService, private messageService: MessageService,  public router: Router) {
 
   }
 
-  inicializa_cultivos(){
-
-    this.sidebarService.getCultivos().subscribe((data: any[]) => {
-
-      this.sidebarService.cultivosDisponibles = data;
-      this.sidebarService.cultivoSeleccionado = this.sidebarService.cultivosDisponibles[0];
-
-     });
-
-  }
 
 
   elimina_cultivo(cultivo: any){
-    this.sidebarService.cultivoSeleccionado = new Cultivo(null);
-    this.sidebarService.delete_cultivo(cultivo);
+    this.cultivosService.cultivoSeleccionado = new Cultivo(null);
+    this.cultivosService.delete_cultivo(cultivo);
 
   }
 
@@ -51,7 +41,7 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.inicializa_cultivos();
+
 
     this.items = [
       {
@@ -65,15 +55,15 @@ export class SidebarComponent implements OnInit {
                 icon: 'pi pi-info-circle',
                 command: () => {
                   //   this.update();
-                  this.sidebarService.sidebarVisible = false;
+                  this.cultivosService.sidebarVisible = false;
                 }
               },
               {
                 label: 'Datos de la solucion nutritiva',
                 icon: 'pi pi-info-circle',
                 command: () => {
-                  //   this.delete();
-                  this.sidebarService.sidebarVisible = false;
+
+                  this.cultivosService.sidebarVisible = false;
                 }
               },
               {
@@ -82,7 +72,7 @@ export class SidebarComponent implements OnInit {
                 command: () => {
 
                   this.router.navigateByUrl("add-edit-cultivo");         /////TODO
-                  this.sidebarService.sidebarVisible = false;
+                  this.cultivosService.sidebarVisible = false;
 
                 }
               },
@@ -93,11 +83,21 @@ export class SidebarComponent implements OnInit {
           label: 'Parametros de configuracion',
           items: [
               {
-                  label: 'Niveles de alerta',
+                  label: 'Parametros del cultivo',
+                  icon: 'pi pi-pencil',
+                  command: () => {
+
+                    this.router.navigateByUrl("parametros");
+                    this.cultivosService.sidebarVisible = false;
+                  }
+
+              },
+              {
+                  label: 'Notificaciones',
                   icon: 'pi pi-sliders-h',
                   command: () => {
-                    //   this.delete();
-                    this.sidebarService.sidebarVisible = false;
+                    this.router.navigateByUrl("alertas");
+                    this.cultivosService.sidebarVisible = false;
                   }
 
               },
@@ -105,8 +105,8 @@ export class SidebarComponent implements OnInit {
                   label: 'Programación horaria',
                   icon: 'pi pi-clock',
                   command: () => {
-                    //   this.delete();
-                    this.sidebarService.sidebarVisible = false;
+                    this.router.navigateByUrl("programacion-horaria");
+                    this.cultivosService.sidebarVisible = false;
                   }
 
               }

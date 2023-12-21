@@ -1,45 +1,143 @@
 <app-cabecera></app-cabecera>
 
 <div class="card flex justify-content-center">
+<p-toast></p-toast>
 
-
-  <p-panel header="Parametros del cultivo">
+  <p-panel header="Parametros del cultivo" class=" panel-con-fondo">
+    <div class="card flex justify-content-center">
+      <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
+    </div>
 
     <div class="card flex justify-content-center">
-      <img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
+      <p-dropdown [options]="cultivosService.cultivosDisponibles"
+                  [(ngModel)]="cultivosService.cultivoSeleccionado"
+                  optionLabel="Nombre"
+                  [style]="{'width': '100%', 'margin-top': '20px'}"
+                  (onChange)="onDropdownChange($event,cultivosService.cultivoSeleccionado )">
+      </p-dropdown>
+    </div>
+     <p></p>
+
+     <div class="linea-divisoria"></div>
+    <div class="flex align-items-Top flex-direction-row;  "  style="margin-Top: 25px;" >
+
+
+
+            <!--        PANEL SOLUCION NUTRITIVA     -->
+
+      <p-card header="Solucion nutritiva:" [style]="{ 'background-color': '#f3fff0'}" >
+        <h4> Rango de pH:</h4>
+        <div class="p-inputgroup " >
+          <span class="p-inputgroup-addon">
+            <i > Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_pH_max" style="text-align: center; margin-right: 13px;" size="10%" />
+          <span class="p-inputgroup-addon">
+            <i > Min</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_pH_min"  style="text-align: center; " size="10%"  />
+
+        </div>
+        <div class="linea-divisoria"></div>
+
+        <h4> Rango de EC:</h4>
+        <div class="p-inputgroup " >
+          <span class="p-inputgroup-addon">
+            <i > Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_CE_max" style="text-align: center; margin-right: 13px;" size="10%" />
+          <span class="p-inputgroup-addon">
+            <i > Min</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_CE_min"  style="text-align: center; " size="10%"  />
+
+        </div>
+        <div class="linea-divisoria"></div>
+
+        <h4> temperatura de la solucion:</h4>
+        <div class="p-inputgroup " >
+          <span class="p-inputgroup-addon">
+            <i > Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_temperatura_SN_max" style="text-align: center; margin-right: 13px;" size="10%" />
+          <span class="p-inputgroup-addon">
+            <i > Min</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_temperatura_SN_min"  style="text-align: center; " size="10%"  />
+
+        </div>
+        <div class="linea-divisoria"></div>
+
+      </p-card>
+      <p></p>
+
+      <!--        PANEL AMBIENTALES     -->
+
+      <p-card header=" Ambientales: "  [style]="{ 'width.px': 350, 'margin-left.px': 20, 'background-color': '#f3fff0' }">
+        <h4>Rango de temperatura (°C):</h4>
+        <div class="p-inputgroup">
+
+          <span class="p-inputgroup-addon">
+              <i> Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_temperatura_max" style="text-align: center; margin-right: 13px;" size="10%"  />
+
+          <span class="p-inputgroup-addon">
+            <i > Mín</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_temperatura_min" style="text-align: center;" size="10%" />
+
+        </div>
+        <div class="linea-divisoria"></div>
+
+        <h4>Rango de Humedad relativa (%):</h4>
+        <div class="p-inputgroup">
+
+          <span class="p-inputgroup-addon">
+              <i> Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_humedad_max" style="text-align: center; margin-right: 13px;" size="10%"  />
+
+          <span class="p-inputgroup-addon">
+            <i > Mín</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_humedad_min" style="text-align: center;" size="10%" />
+
+        </div>
+        <div class="linea-divisoria"></div>
+
+        <h4>Rango de Luminidad (lux):</h4>
+        <div class="p-inputgroup">
+
+          <span class="p-inputgroup-addon">
+              <i> Máx</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_lux_max" style="text-align: center; margin-right: 13px;" size="10%"  />
+
+          <span class="p-inputgroup-addon">
+            <i > Mín</i>
+          </span>
+          <input pInputText [(ngModel)]="this.cultivoedit.rango_lux_min" style="text-align: center;" size="10%" />
+
+        </div>
+        <div class="linea-divisoria"></div>
+      </p-card>
+
+
     </div>
 
-    <div class="card flex justify-content-center ">
+    <div  *ngIf=" (this.cultivoedit.rango_CE_min != this.cultivosService.cultivoSeleccionado.rango_CE_min) ||  (this.cultivoedit.rango_CE_max != this.cultivosService.cultivoSeleccionado.rango_CE_max)
+     || (this.cultivoedit.rango_pH_min != this.cultivosService.cultivoSeleccionado.rango_pH_min) || (this.cultivoedit.rango_pH_max != this.cultivosService.cultivoSeleccionado.rango_pH_max)
+      || (this.cultivoedit.rango_temperatura_SN_max != this.cultivosService.cultivoSeleccionado.rango_temperatura_SN_max) || (this.cultivoedit.rango_temperatura_SN_min != this.cultivosService.cultivoSeleccionado.rango_temperatura_SN_min)
+       || (this.cultivoedit.rango_temperatura_max != this.cultivosService.cultivoSeleccionado.rango_temperatura_max) || (this.cultivoedit.rango_temperatura_min != this.cultivosService.cultivoSeleccionado.rango_temperatura_min)
+        || (this.cultivoedit.rango_humedad_max != this.cultivosService.cultivoSeleccionado.rango_humedad_max)|| (this.cultivoedit.rango_humedad_min != this.cultivosService.cultivoSeleccionado.rango_humedad_min)
+         || (this.cultivoedit.rango_lux_max != this.cultivosService.cultivoSeleccionado.rango_lux_max) || (this.cultivoedit.rango_lux_min != this.cultivosService.cultivoSeleccionado.rango_lux_min) ">
 
-      <p-dropdown [options]="this.sidebarService.cultivosDisponibles" [(ngModel)]="this.sidebarService.cultivoSeleccionado" optionLabel="Nombre" [style]="{'width': '100%', 'margin-top': '20px'}" ></p-dropdown>
-
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+              <p-button (click)="guardar_cultivo()" icon="pi pi-check" label="Guardar"></p-button>
+              <p-button (click)="cultivoEdit_igual_cultivoSeleccionado()" icon="pi pi-check" label="Cancelar" severity="danger" [ngStyle]="{'margin-left': '20px'}">></p-button>
+            </div>
     </div>
-    <p-panel header="Parametros de la solucion">
-
-      <div class="card">
-        <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-                <tr>
-                    <td>{{ product.code }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.quantity }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-
-
-    </p-panel>
-
   </p-panel>
 
 </div>

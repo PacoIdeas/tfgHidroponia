@@ -7,7 +7,7 @@
     <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text" ></p-confirmDialog>
 
     <div class="card">
-      <p-table [columns]="cols" [value]="this.sidebarService.cultivosDisponibles" [tableStyle]="{ 'min-width': '50rem' }">
+      <p-table [columns]="cols" [value]="this.cultivosService.cultivosDisponibles" [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header" let-columns>
               <tr>
                   <th *ngFor="let col of columns">
@@ -31,7 +31,7 @@
                 <td *ngFor="let col of columns">
                     {{ cultivo[col.field] }}
                 </td>
-                <td><img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-4rem h-4rem shadow-2"/></td>
+                <td><img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-4rem h-4rem shadow-2"/></td>
 
                 <td>
                   <p-button (click)="Dialog_edit_cultivo(cultivo)" [text]="true" icon="pi pi-pencil" label="Edit"   ></p-button>
@@ -54,14 +54,14 @@
   </div>
 
 
-  <p-dialog  *ngIf="this.sidebarService.cultivoSeleccionado" header="Edicion del cultivo" [closable]="false" [(visible)]="dialogo_editar_cultivo" [style]="{width: '25%'}">
+  <p-dialog  *ngIf="this.cultivosService.cultivoSeleccionado" header="Edicion del cultivo" [closable]="false" [(visible)]="dialogo_editar_cultivo" [style]="{width: '25%'}">
 
 
 
 
     <div class="card flex justify-content-center ">
 
-      <img src="../../assets/imagenes/{{ this.sidebarService.cultivoSeleccionado.imagen }}" [alt]="this.sidebarService.cultivoSeleccionado.imagen" class="w-8rem h-8rem shadow-5"/>
+      <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-8rem h-8rem shadow-5"/>
 
     </div>
 
@@ -76,14 +76,14 @@
         <h5>Nombre</h5>
       </div>
       <div class="card flex justify-content-center">
-        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.Nombre" />
+        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.cultivosService.cultivoSeleccionado.Nombre" />
       </div>
 
       <div class="card flex justify-content-center">
         <h5>Imagen</h5>
       </div>
       <div class=" card flex justify-content-center ">
-       <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.imagen"  />
+       <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.cultivosService.cultivoSeleccionado.imagen"  />
       </div>
 
 
@@ -92,13 +92,13 @@
       </div>
 
       <div class="card flex justify-content-center">
-        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.sidebarService.cultivoSeleccionado.Fecha_Creacion" />
+        <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="this.cultivosService.cultivoSeleccionado.Fecha_Creacion" />
       </div>
 
 
       </div>
     <ng-template pTemplate="footer">
-        <p-button label="Save" (click)="editar_cultivo(this.sidebarService.cultivoSeleccionado)" icon="pi pi-check"></p-button>
+        <p-button label="Save" (click)="editar_cultivo(this.cultivosService.cultivoSeleccionado)" icon="pi pi-check"></p-button>
         <p-button label="Cancel" (click)="this.dialogo_editar_cultivo=false" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
     </ng-template>
 

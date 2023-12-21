@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ComunesService } from 'src/app/servicios/comunes.service';
-import { SidebarService } from 'src/app/servicios/sidebar.service';
+import { CultivosService } from 'src/app/servicios/cultivos.service';
 import { ConfirmationService,ConfirmEventType ,MessageService} from 'primeng/api';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ export class AddEditCultivoComponent implements OnInit{
 
   dialogo_editar_cultivo!: boolean;
 
-  constructor(public comunesService: ComunesService, public sidebarService: SidebarService, private confirmationService: ConfirmationService,public dialogService: DialogService,  private messageService: MessageService,  public router: Router) {
+  constructor(public comunesService: ComunesService, public cultivosService: CultivosService, private confirmationService: ConfirmationService,public dialogService: DialogService,  private messageService: MessageService,  public router: Router) {
 
   }
 
@@ -39,10 +39,10 @@ export class AddEditCultivoComponent implements OnInit{
 
 
   obtenerCultivos() {
-    this.sidebarService.getCultivos().subscribe(
+    this.cultivosService.getCultivos().subscribe(
       data => {
         this.cultivos = data;
-        this.sidebarService.cultivosDisponibles = data;
+        this.cultivosService.cultivosDisponibles = data;
       }
     )
   }
@@ -60,7 +60,7 @@ export class AddEditCultivoComponent implements OnInit{
       baseZIndex: 10000,
       maximizable: true,
       data: {
-        cultivosPredefinidos: this.sidebarService.cultivosPredefinidos
+        cultivosPredefinidos: this.cultivosService.cultivosPredefinidos
       }
     });
 
@@ -82,7 +82,7 @@ export class AddEditCultivoComponent implements OnInit{
 
   Dialog_edit_cultivo(cultivo: Cultivo) {
 
-    this.sidebarService.cultivoSeleccionado = cultivo;
+    this.cultivosService.cultivoSeleccionado = cultivo;
 
     if(!this.dialogo_editar_cultivo){
       this.dialogo_editar_cultivo = true;
@@ -92,10 +92,10 @@ export class AddEditCultivoComponent implements OnInit{
   }
 
   editar_cultivo(cultivo: Cultivo) {
-    this.sidebarService.cultivoSeleccionado = cultivo;
-    this.sidebarService.add_eddit_cultivo(cultivo).subscribe(
+    this.cultivosService.cultivoSeleccionado = cultivo;
+    this.cultivosService.add_eddit_cultivo(cultivo).subscribe(
       data => {
-        this.sidebarService.cultivosDisponibles[this.sidebarService.cultivosDisponibles.indexOf(cultivo)] = data;
+        this.cultivosService.cultivosDisponibles[this.cultivosService.cultivosDisponibles.indexOf(cultivo)] = data;
       }
     )
     this.Dialog_edit_cultivo(cultivo);
@@ -103,13 +103,13 @@ export class AddEditCultivoComponent implements OnInit{
   }
 
   ver_parametros(cultivo: Cultivo) {
-    this.sidebarService.cultivoSeleccionado = cultivo;
+    this.cultivosService.cultivoSeleccionado = cultivo;
     this.router.navigateByUrl("parametros");
   }
 
 
   eliminarCultivo(cultivo: Cultivo) {
-    this.sidebarService.delete_cultivo(cultivo).subscribe(
+    this.cultivosService.delete_cultivo(cultivo).subscribe(
       data => {
 
       }

@@ -42,6 +42,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CardModule } from 'primeng/card';
 import { TreeTableModule } from 'primeng/treetable';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { KnobModule } from 'primeng/knob';
 //////////////////////////////////
 
 
@@ -52,9 +54,11 @@ import { UserComponent } from './vistas/user/user.component';
 import { AdminComponent } from './vistas/admin/admin.component';
 import { SidebarComponent } from './componentes/sidebar/sidebar.component';
 import { ComunesService } from './servicios/comunes.service';
-import { SidebarService } from './servicios/sidebar.service';
+import { CultivosService } from './servicios/cultivos.service';
 import { CultivosPredeterminadosComponent } from './componentes/cultivos-predeterminados/cultivos-predeterminados.component';
 import { ParametrosComponent } from './vistas/parametros/parametros.component';
+import { AlertasComponent } from './vistas/alertas/alertas.component';
+import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/programacion-horaria.component';
 
 
 
@@ -68,7 +72,9 @@ import { ParametrosComponent } from './vistas/parametros/parametros.component';
     CabeceraComponent,
     AddEditCultivoComponent,
     CultivosPredeterminadosComponent,
-    ParametrosComponent
+    ParametrosComponent,
+    AlertasComponent,
+    ProgramacionHorariaComponent
 
   ],
   imports: [
@@ -79,6 +85,7 @@ import { ParametrosComponent } from './vistas/parametros/parametros.component';
     FormsModule,
     TreeTableModule,
     MenubarModule,
+
     ButtonModule,
     DividerModule,
     PanelModule,
@@ -93,6 +100,8 @@ import { ParametrosComponent } from './vistas/parametros/parametros.component';
     DialogModule,
     DynamicDialogModule,
     CalendarModule,
+    InputSwitchModule,
+    KnobModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario
@@ -108,7 +117,8 @@ import { ParametrosComponent } from './vistas/parametros/parametros.component';
     FilterService,
     UserComponent,
     ComunesService,
-    SidebarService
+    CultivosService,
+
 
   ],
   bootstrap: [AppComponent]

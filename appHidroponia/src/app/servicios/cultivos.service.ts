@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class SidebarService {
+export class CultivosService {
 
 
   API_URI = 'http://localhost:3000';

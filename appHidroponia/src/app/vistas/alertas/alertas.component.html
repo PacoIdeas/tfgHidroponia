@@ -1,0 +1,91 @@
+<app-cabecera></app-cabecera>
+<p-toast></p-toast>
+<div class="card flex justify-content-center ">
+
+
+
+  <p-panel header="Notidicaciones de email" class=" panel-con-fondo">
+    <div class="card flex justify-content-center">
+      <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
+    </div>
+
+    <div class="card flex justify-content-center">
+      <p-dropdown [options]="cultivosService.cultivosDisponibles"
+                  [(ngModel)]="cultivosService.cultivoSeleccionado"
+                  optionLabel="Nombre"
+                  [style]="{'width': '100%', 'margin-top': '20px'}"
+                  (onChange)="onDropdownChange($event,cultivosService.cultivoSeleccionado )">
+      </p-dropdown>
+    </div>
+     <p></p>
+    <div class="linea-divisoria"></div>
+
+
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_diaria" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">Informacion diaria.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+          Esta notificacion enviara a su correo un resumen de los datos recopilados durante el dia.
+      </p>
+    </p-panel>
+
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_pH" (onChange)="onSwitchChange($event)" ></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">pH fuera de rango.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+          Enviará la notificacion una vez las lecturas de pH salgan del rango [{{this.cultivosService.cultivoSeleccionado.rango_pH_min}} - {{this.cultivosService.cultivoSeleccionado.rango_pH_max}}] pH.
+      </p>
+    </p-panel>
+
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_EC" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">EC fuera de rango.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+          Enviará la notificacion una vez las lecturas de EC salgan del rango [{{this.cultivosService.cultivoSeleccionado.rango_CE_min}} - {{this.cultivosService.cultivoSeleccionado.rango_CE_max}}] mS.
+      </p>
+    </p-panel>
+
+    <p-panel [toggleable]="true" [collapsed] = "true" >
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_temperatura" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">Temperatura ambiental fuera de rango.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+          Enviará la notificacion una vez las lecturas de la temperatura ambiental salgan del rango [{{this.cultivosService.cultivoSeleccionado.rango_temperatura_min}} - {{this.cultivosService.cultivoSeleccionado.rango_temperatura_max}}] ºC.
+      </p>
+    </p-panel>
+
+
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_humedad" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">Humedad ambiental fuera de rango.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+          Enviará la notificacion una vez las lecturas de la humedad ambiental salgan del rango  [{{this.cultivosService.cultivoSeleccionado.rango_humedad_min}} - {{this.cultivosService.cultivoSeleccionado.rango_humedad_max}}] %.
+      </p>
+    </p-panel>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 20px;" >
+      <p-button (click)="guardar_notificaciones()" icon="pi pi-check" label="Guardar"  [hidden]="!this.visible_guarda_cancela"></p-button>
+      <p-button (click)="restablece_notificaciones()" icon="pi pi-check" label="Cancelar"  [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}">></p-button>
+    </div>
+
+  </p-panel>
+</div>

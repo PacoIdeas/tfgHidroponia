@@ -1,0 +1,92 @@
+<app-cabecera></app-cabecera>
+
+<div class="card flex justify-content-center" [style]="{ 'width': '100%', 'height': '100%'}">
+<p-toast></p-toast>
+
+  <p-panel header="Programacion horaria de los riegos" class=" panel-con-fondo" >
+    <div class="card flex justify-content-center">
+      <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
+    </div>
+
+    <div class="card flex justify-content-center">
+      <p-dropdown [options]="cultivosService.cultivosDisponibles"
+                  [(ngModel)]="cultivosService.cultivoSeleccionado"
+                  optionLabel="Nombre"
+                  [style]="{'width': '100%', 'margin-top': '20px'}"
+                  (onChange)="onDropdownChange($event,cultivosService.cultivoSeleccionado )">
+      </p-dropdown>
+    </div>
+
+    <p></p>
+    <div class="linea-divisoria"></div>
+
+
+
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;  " >
+      <p-card header="Madrugada 01:00 - 06:00" [style]="{ 'background-color': '#f3fff0', 'size': '10%',  'margin-left': '20px',}" >
+
+        <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo ON</h3>
+            <p-knob [(ngModel)]="edit_horarios[0].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+          <p></p>
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo OFF</h3>
+            <p-knob [(ngModel)]="edit_horarios[0].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+        </div>
+
+      </p-card>
+
+      <p-card header="Mañana 06:00 - 12:00" [style]="{ 'background-color': '#f3fff0', 'margin-left': '20px', 'size': '10%'}" >
+        <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo ON</h3>
+            <p-knob [(ngModel)]="edit_horarios[1].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+          <p></p>
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo OFF</h3>
+            <p-knob [(ngModel)]="edit_horarios[1].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+        </div>
+
+      </p-card>
+    </div>
+
+
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 20px " >
+      <p-card header="tarde 12:00 - 18:00" [style]="{ 'background-color': '#f3fff0', 'size': '10%'}" >
+
+        <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo ON</h3>
+            <p-knob [(ngModel)]="edit_horarios[2].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+          <p></p>
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo OFF</h3>
+            <p-knob [(ngModel)]="edit_horarios[2].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+        </div>
+
+      </p-card>
+
+      <p-card header="Noche 18:00 - :00" [style]="{ 'background-color': '#f3fff0', 'margin-left': '20px', 'size': '10%'}" >
+
+        <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo ON</h3>
+            <p-knob [(ngModel)]="edit_horarios[3].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+          <p></p>
+          <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
+            <h3>Tiempo OFF</h3>
+            <p-knob [(ngModel)]="edit_horarios[3].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+          </div>
+        </div>
+
+      </p-card>
+    </div>
+  </p-panel>

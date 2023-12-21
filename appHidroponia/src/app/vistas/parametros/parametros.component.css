@@ -1,0 +1,17 @@
+
+
+.panel-con-fondo {
+  background-color: #bdd9b6 !important; /* Utiliza !important para asegurar que el estilo se aplique */
+}
+
+.linea-divisoria {
+  height: 1px;
+  background-color: #000;
+  margin: 10px 0;
+}
+
+.contenedor-botones {
+  display: flex;
+  justify-content: flex-end; /* Alinea los botones al extremo derecho */
+  gap: 10px; /* Espacio entre los botones */
+}

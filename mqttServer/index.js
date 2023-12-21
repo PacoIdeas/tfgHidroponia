@@ -7,7 +7,7 @@ const mqttClient = require('./rutas/mqttService'); // Importa el cliente MQTTT
 const conectarBaseDeDatos =  require('./rutas/SQLite')
 const autentificacion = require('./rutas/autentificacion') 
 const Cultivos = require('./rutas/cultivo');
-
+const Notificaciones = require('./rutas/notificaciones');
 
 const db = conectarBaseDeDatos();
 
@@ -27,6 +27,7 @@ app.use(cors({
 
 app.use(autentificacion);
 app.use(Cultivos);
+app.use(Notificaciones);
 
 // Crear las tablas en la base de datos si no existen
 db.serialize(() => {
