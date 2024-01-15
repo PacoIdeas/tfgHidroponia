@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const path = require('path');
 
 const mqttClient = require('./rutas/mqttService'); // Importa el cliente MQTTT
 const conectarBaseDeDatos =  require('./rutas/SQLite')
@@ -22,8 +22,8 @@ app.use(cors({
     origin: 'http://localhost:4200'
 }));
 
-
-
+// Configurar la ruta '/imagenes' como estática para servir imágenes desde la carpeta 'imagenes'
+app.use('/imagenes',express.static(path.join(__dirname, 'imagenes')));
 
 app.use(autentificacion);
 app.use(Cultivos);

@@ -81,10 +81,10 @@ export class LoginComponent implements OnInit{
                 this.autentificacionService.usuario.username = decodedToken.datos_token.username
                 this.autentificacionService.usuario.roll = decodedToken.datos_token.roll
                 if(this.autentificacionService.usuario.roll == "admin"){ //administrador
-                  this.router.navigateByUrl("/admin");
+                  this.router.navigateByUrl("/home");
 
                 }else if(this.autentificacionService.usuario.roll == "user"){ // usuario o gestor
-                  this.router.navigateByUrl("/user");
+                  this.router.navigateByUrl("/home");
                 }
 
 

@@ -37,18 +37,19 @@ export class ProgramacionHorariaComponent implements OnInit {
   edit_horario_madrugada: Intervalos = new Intervalos("madrugada", 0, 0);
   edit_horarios: Intervalos[] = [this.edit_horario_manana, this.edit_horario_tarde, this.edit_horario_noche, this.edit_horario_madrugada];
 
+  visible_guarda_cancela: boolean = false;
+
+
   constructor(   public cultivosService: CultivosService, public parametrosService: ParametrosService, private messageService: MessageService,  public router: Router) { }
 
 
 
-  onDropdownChange(event: { originalEvent: Event, value: SelectItem }, cultivoSelec: Cultivo) {
+  onDropdownChange(event: any, cultivoSelec: Cultivo) {
     // // Aquí puedes realizar acciones cuando se selecciona una nueva opción
-    // this.cultivoedit = new Cultivo(null);
-    // this.cultivosService.cultivoSeleccionado = cultivoSelec;
 
-    // this.inicializaSwitchNotificaciones();
-    // console.log('Nueva opción seleccionada:', event.value);
-    // Llamar a la función del componente que desees ejecutar
+    this.cultivosService.cultivoSeleccionado = cultivoSelec;
+
+    this.inicializaHorarios();
 
   }
 
@@ -58,15 +59,41 @@ export class ProgramacionHorariaComponent implements OnInit {
       this.parametrosService.horarios = data;
       this.edit_horarios = [data[0], data[1], data[2], data[3]];
     }
+    )
+    this.visible_guarda_cancela = false;
+
+  }
+
+  cancelar() {
+    this.messageService.add({severity : 'warn', summary: "Advertencia!", detail: "Se han descartado los cambios"});
+    this.inicializaHorarios();
+    this.visible_guarda_cancela = false;
+  }
+
+  onValueChange(event: any, g: number) {
+    this.visible_guarda_cancela = true;
+  }
+
+
+  guardarCambios() {
+
+    this.visible_guarda_cancela = false;
+    this.parametrosService.horarios = this.edit_horarios;
+    this.messageService.add({severity : 'success', summary: "Success", detail: "Cambios realizados"});
+    this.parametrosService.postGuardaHorarios(this.cultivosService.cultivoSeleccionado.id_cultivo, this.edit_horarios).subscribe(
 
     )
   }
 
+
+
+
+
+
+
   ngOnInit(): void {
     this.inicializaHorarios();
   }
-
-
 
 
 

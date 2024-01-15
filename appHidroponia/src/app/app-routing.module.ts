@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './vistas/login/login.component';
-import { UserComponent } from './vistas/user/user.component';
 
 import { AuthGuardService } from './servicios/auth-guard.service';
 
@@ -19,13 +18,9 @@ import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/prog
 const routes: Routes = [
 
   { path: "", component: LoginComponent },
-  {
-    path: "user",
-    component: UserComponent,
-    canActivate:[AuthGuardService],
-   },
+
    {
-    path: "admin",
+    path: "home",
     component: AdminComponent,
     canActivate:[AuthGuardService],
    },

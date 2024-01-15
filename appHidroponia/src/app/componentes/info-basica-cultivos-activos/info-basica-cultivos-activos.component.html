@@ -1,0 +1,50 @@
+
+<div style=" display: flex; justify-content: center; width: 100%; margin-top: 10px;">
+  <p-panel header="Cultivos en marcha">
+
+  <div class="display: flex; flex-direction: column; align-items: center;">
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="1" [totalRecords]="this.cultivos.length" ></p-paginator>
+
+
+
+    <p-card [style]="{width: '500px', border: '1px solid #2d2d2d' }" >
+
+
+      <!-- Iconos en la esquina superior derecha -->
+      <div style="display: flex; flex-direction: row; justify-content: flex-end; ">
+
+        <!-- <i class="pi pi-trash clickable-icon" (click)="2"></i>
+        <i class="pi pi-plus clickable-icon" (click)="2"></i> -->
+
+        <i class="pi pi-bell mr-4 p-text-secondary clickable-icon" (click)="2" pBadge style="font-size: 2rem" value="2"></i>
+        <i class="pi pi-calendar mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="10" severity="danger"></i>
+        <i class="pi pi-envelope p-text-secondary" pBadge style="font-size: 2rem" severity="danger"></i>
+
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; width: 20% ">
+        <img src="../../assets/imagenes/{{ this.cultivoActivoSeleccionado.imagen }}" [alt]="this.cultivoActivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"/>
+
+          {{ this.cultivoActivoSeleccionado.Nombre }}
+      </div>
+
+
+      <!-- Atributos de PH y EC a la derecha -->
+      <div style="position: absolute; top: 50%; left: 100px; transform: translateY(-50%); display: flex; flex-direction: column;">
+        <div>{{ this.cultivoActivoSeleccionado.rango_pH_max }}</div>
+        <div>{{ this.cultivoActivoSeleccionado.rango_CE_min }}</div>
+      </div>
+
+      <!-- Atributos de Temp y Hum a la derecha -->
+      <div style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); display: flex; flex-direction: column;">
+        <div>{{ this.cultivoActivoSeleccionado.rango_humedad_max }}</div>
+        <div>{{ this.cultivoActivoSeleccionado.rango_temperatura_SN_min }}</div>
+      </div>
+
+    </p-card>
+
+  </div>
+
+
+  </p-panel>
+</div>

@@ -60,12 +60,14 @@ export class AlertasComponent implements OnInit {
 
     this.inicializaSwitchNotificaciones();
     console.log('Nueva opción seleccionada:', event.value);
+    this.visible_guarda_cancela = false;
     // Llamar a la función del componente que desees ejecutar
 
   }
 
 
   onSwitchChange(event: any){
+
     this.visible_guarda_cancela = true;
   }
 

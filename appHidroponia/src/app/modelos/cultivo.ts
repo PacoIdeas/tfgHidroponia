@@ -29,7 +29,7 @@ export class Cultivo {
 
 
   Fecha_Creacion: Date  ;
-
+  Fecha_Finalizacion: Date | null;
 
 
   // Constructor que acepta un argumento opcional de tipo number o string
@@ -58,6 +58,7 @@ export class Cultivo {
     this.rango_lux_min=   0;
 
     this.Fecha_Creacion =   new Date();
+    this.Fecha_Finalizacion = null;
   }
 
 

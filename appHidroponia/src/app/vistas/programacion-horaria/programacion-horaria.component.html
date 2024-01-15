@@ -28,12 +28,12 @@
         <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo ON</h3>
-            <p-knob [(ngModel)]="edit_horarios[0].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[0].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }" (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
           <p></p>
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo OFF</h3>
-            <p-knob [(ngModel)]="edit_horarios[0].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[0].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }" (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
         </div>
 
@@ -43,12 +43,12 @@
         <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo ON</h3>
-            <p-knob [(ngModel)]="edit_horarios[1].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[1].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }" (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
           <p></p>
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo OFF</h3>
-            <p-knob [(ngModel)]="edit_horarios[1].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[1].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }" (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
         </div>
 
@@ -62,12 +62,12 @@
         <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo ON</h3>
-            <p-knob [(ngModel)]="edit_horarios[2].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[2].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"  (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
           <p></p>
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo OFF</h3>
-            <p-knob [(ngModel)]="edit_horarios[2].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[2].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"  (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
         </div>
 
@@ -78,15 +78,22 @@
         <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo ON</h3>
-            <p-knob [(ngModel)]="edit_horarios[3].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[3].minutos_on" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"  (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
           <p></p>
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
             <h3>Tiempo OFF</h3>
-            <p-knob [(ngModel)]="edit_horarios[3].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"></p-knob>
+            <p-knob [(ngModel)]="edit_horarios[3].minutos_off" [min]="0" [max]="60" [style]= "{'margin-left': '10px' }"  (onChange)="onValueChange($event,edit_horarios[0].minutos_on)"></p-knob>
           </div>
         </div>
 
       </p-card>
     </div>
+
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 20px " >
+      <p-button label="Guardar cambios" (onClick)="guardarCambios()" [hidden]="!this.visible_guarda_cancela"  ></p-button>
+      <p-button label="Cancelar" (onClick)="cancelar()" [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}"></p-button>
+    </div>
+
+
   </p-panel>

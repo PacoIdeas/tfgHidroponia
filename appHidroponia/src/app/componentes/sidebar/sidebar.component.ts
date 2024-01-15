@@ -45,72 +45,85 @@ export class SidebarComponent implements OnInit {
 
     this.items = [
       {
+        label:"",
+        items: [
+          {
+            label: 'Home',
+            icon: 'pi pi-home',
+            command: () => {
 
-          label: 'Observación del cultivo',
-          items: [
+              this.router.navigateByUrl("/home");
+            }
+          }
+
+        ]
+      },
+      {
+        label: 'Observación del cultivo',
+        items: [
 
 
-              {
-                label: 'Datos atmosféricos',
-                icon: 'pi pi-info-circle',
-                command: () => {
-                  //   this.update();
-                  this.cultivosService.sidebarVisible = false;
-                }
-              },
-              {
-                label: 'Datos de la solucion nutritiva',
-                icon: 'pi pi-info-circle',
-                command: () => {
+            {
+              label: 'Datos atmosféricos',
+              icon: 'pi pi-info-circle',
+              command: () => {
+                //   this.update();
+                this.cultivosService.sidebarVisible = false;
+              }
+            },
+            {
+              label: 'Datos de la solucion nutritiva',
+              icon: 'pi pi-info-circle',
+              command: () => {
 
-                  this.cultivosService.sidebarVisible = false;
-                }
-              },
-              {
-                label: 'Editar cultivo',
+                this.cultivosService.sidebarVisible = false;
+              }
+            },
+            {
+              label: 'Editar cultivo',
+              icon: 'pi pi-pencil',
+              command: () => {
+
+                this.router.navigateByUrl("add-edit-cultivo");         /////TODO
+                this.cultivosService.sidebarVisible = false;
+
+              }
+            },
+
+        ]
+      },
+      {
+        label: 'Parametros de configuracion',
+        items: [
+            {
+                label: 'Parametros del cultivo',
                 icon: 'pi pi-pencil',
                 command: () => {
 
-                  this.router.navigateByUrl("add-edit-cultivo");         /////TODO
+                  this.router.navigateByUrl("parametros");
                   this.cultivosService.sidebarVisible = false;
-
                 }
-              },
 
-          ]
-      },
-      {
-          label: 'Parametros de configuracion',
-          items: [
-              {
-                  label: 'Parametros del cultivo',
-                  icon: 'pi pi-pencil',
-                  command: () => {
+            },
+            {
+                label: 'Notificaciones',
+                icon: 'pi pi-sliders-h',
+                command: () => {
+                  this.router.navigateByUrl("alertas");
+                  this.cultivosService.sidebarVisible = false;
+                }
 
-                    this.router.navigateByUrl("parametros");
-                    this.cultivosService.sidebarVisible = false;
-                  }
+            },
+            {
+                label: 'Programación horaria',
+                icon: 'pi pi-clock',
+                command: () => {
+                  this.router.navigateByUrl("programacion-horaria");
+                  this.cultivosService.sidebarVisible = false;
+                }
 
-              },
-              {
-                  label: 'Notificaciones',
-                  icon: 'pi pi-sliders-h',
-                  command: () => {
-                    this.router.navigateByUrl("alertas");
-                    this.cultivosService.sidebarVisible = false;
-                  }
-
-              },
-              {
-                  label: 'Programación horaria',
-                  icon: 'pi pi-clock',
-                  command: () => {
-                    this.router.navigateByUrl("programacion-horaria");
-                    this.cultivosService.sidebarVisible = false;
-                  }
-
-              }
-          ]
+            }
+        ]
       }
   ];
 

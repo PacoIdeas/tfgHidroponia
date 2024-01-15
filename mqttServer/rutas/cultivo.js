@@ -281,6 +281,23 @@ Cultivos.get('/Horarios', async (req, res) => {
     
 })
 
+Cultivos.post('/GuardaHorarios', async (req, res) => {
+
+    const id_cultivo = req.body.id_cultivo;
+    const horarios = req.body.horarios;
+    console.log("Guardando horarios", horarios, id_cultivo);
+
+    const query_borra_horario = `DELETE FROM HorariosRiego WHERE id_cultivo = '${id_cultivo}'`;
+    const borrados = await dbGetAsync(query_borra_horario);
+
+    for(let i=0; horarios.length > i; i++){
+      const query_inserta_horario = "INSERT INTO HorariosRiego (id_cultivo, momento, minutos_on, minutos_off) VALUES (?, ?, ?, ?)";
+      const rows = await dbGetAsync(query_inserta_horario, [id_cultivo, horarios[i].momento, horarios[i].minutos_on, horarios[i].minutos_off]);
+    } 
+
+
+})
+
  
 
 module.exports = Cultivos;

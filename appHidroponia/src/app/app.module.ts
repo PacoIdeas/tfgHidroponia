@@ -44,13 +44,15 @@ import { CardModule } from 'primeng/card';
 import { TreeTableModule } from 'primeng/treetable';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { KnobModule } from 'primeng/knob';
+import { DataViewModule } from 'primeng/dataview';
+import { BadgeModule } from 'primeng/badge';
 //////////////////////////////////
 
 
 import { NuevoCultivoComponent } from './componentes/nuevo-cultivo/nuevo-cultivo.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { AddEditCultivoComponent } from './vistas/add-edit-cultivo/add-edit-cultivo.component';
-import { UserComponent } from './vistas/user/user.component';
+
 import { AdminComponent } from './vistas/admin/admin.component';
 import { SidebarComponent } from './componentes/sidebar/sidebar.component';
 import { ComunesService } from './servicios/comunes.service';
@@ -59,13 +61,13 @@ import { CultivosPredeterminadosComponent } from './componentes/cultivos-predete
 import { ParametrosComponent } from './vistas/parametros/parametros.component';
 import { AlertasComponent } from './vistas/alertas/alertas.component';
 import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/programacion-horaria.component';
+import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cultivos-activos/info-basica-cultivos-activos.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
     AdminComponent,
     SidebarComponent,
     NuevoCultivoComponent,
@@ -74,7 +76,8 @@ import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/prog
     CultivosPredeterminadosComponent,
     ParametrosComponent,
     AlertasComponent,
-    ProgramacionHorariaComponent
+    ProgramacionHorariaComponent,
+    InfoBasicaCultivosActivosComponent
 
   ],
   imports: [
@@ -96,8 +99,11 @@ import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/prog
     MenuModule,
     CardModule,
     DropdownModule,
+    PaginatorModule,
+    DataViewModule,
     ConfirmPopupModule,
     DialogModule,
+    BadgeModule,
     DynamicDialogModule,
     CalendarModule,
     InputSwitchModule,
@@ -115,7 +121,6 @@ import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/prog
     JwtHelperService,
     ConfirmationService,
     FilterService,
-    UserComponent,
     ComunesService,
     CultivosService,
 

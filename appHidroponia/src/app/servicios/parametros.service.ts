@@ -69,6 +69,10 @@ export class ParametrosService {
     return this.http.get<Intervalos[]>(`${this.API_URI}/Horarios`, { params: { id_cultivo: id_cultivo } });
   }
 
+  postGuardaHorarios(id_cultivo: number, horarios: Intervalos[]) {
+
+    return this.http.post<Intervalos[]>(`${this.API_URI}/GuardaHorarios`, { id_cultivo: id_cultivo, horarios: horarios });
+  }
 
 
 
