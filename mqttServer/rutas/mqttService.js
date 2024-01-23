@@ -82,12 +82,26 @@ client.on('connect', () => {
         const fecha_hora = formatDateToSQLDateTime();
         
         db.serialize(() => {
-          db.run('INSERT INTO Datos_ambientales (fecha_hora, temperatura, humedad) VALUES (?, ?, ?);',[fecha_hora, valores[0], valores[1] ], function(err) {
+          console.log(`Se insertó el temperatura: ${valores[0]}, humedad:  ${valores[1]}, light: ${valores[2]}, TemperaturaSN: ${valores[3]}`);
+          db.run('INSERT INTO Datos_ambientales (fecha_hora, temperatura, humedad, luminosidad) VALUES (?, ?, ?, ?);',[fecha_hora, valores[0], valores[1], valores[2] ], function(err) {
             if (err) {
               return console.error(err.message);
+            }else{
+              console.log("datos ambientales insertados")
             }
-            console.log(`Se insertó el temperatura: ${valores[0]}, humedad:  ${valores[1]}`);
+  
           });
+
+          db.run('INSERT INTO Datos_SN (fecha_hora, temperatura) VALUES (?, ?);',[fecha_hora, valores[3] ], function(err) {
+            if (err) {
+              return console.error(err.message);
+            }else{
+              console.log("datos SN insertados")
+            } 
+            
+          });
+       
+
         }); 
 
   

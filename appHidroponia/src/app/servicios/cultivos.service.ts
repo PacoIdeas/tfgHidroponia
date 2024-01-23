@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cultivo } from '../modelos/cultivo';
-
+import {datosCultivoActuales} from '../modelos/datosCultivoActuales';
 
 import { Observable } from "rxjs";
 
@@ -60,7 +60,10 @@ export class CultivosService {
   }
 
 
+  getDatosCultivoActuales(id_cultivo: number): Observable<datosCultivoActuales> {
 
+    return this.http.get<datosCultivoActuales>(this.API_URI + "/CultivosActuales", { params: { id_cultivo: id_cultivo } });
+  }
 
 
 

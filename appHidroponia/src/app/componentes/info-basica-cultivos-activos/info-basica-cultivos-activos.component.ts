@@ -28,6 +28,9 @@ interface PageEvent {
 
 
 export class InfoBasicaCultivosActivosComponent implements OnInit {
+visualizarCultivo() {
+throw new Error('Method not implemented.');
+}
 
 
 
@@ -68,6 +71,9 @@ export class InfoBasicaCultivosActivosComponent implements OnInit {
   onPageChange(event: PageEvent | any) {
     this.first = event.first;
     this.cultivoActivoSeleccionado = this.cultivos[event.page];
+
+
+
   }
 
 
