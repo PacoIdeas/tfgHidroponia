@@ -31,7 +31,9 @@
                 <td *ngFor="let col of columns">
                     {{ cultivo[col.field] }}
                 </td>
-                <td><img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-4rem h-4rem shadow-2"/></td>
+                <td>
+                   <p-image  src="http://localhost:3000/imagenes/{{ cultivo.imagen }}" [alt]="cultivo.imagen" height="120px" width="120px" [preview]="true"></p-image>
+                </td>
 
                 <td>
                   <p-button (click)="Dialog_edit_cultivo(cultivo)" [text]="true" icon="pi pi-pencil" label="Edit"   ></p-button>

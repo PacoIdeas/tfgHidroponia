@@ -46,6 +46,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { KnobModule } from 'primeng/knob';
 import { DataViewModule } from 'primeng/dataview';
 import { BadgeModule } from 'primeng/badge';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 //////////////////////////////////
 
 
@@ -77,7 +79,8 @@ import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cu
     ParametrosComponent,
     AlertasComponent,
     ProgramacionHorariaComponent,
-    InfoBasicaCultivosActivosComponent
+    InfoBasicaCultivosActivosComponent,
+
 
   ],
   imports: [
@@ -86,9 +89,10 @@ import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cu
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ImageModule,
     TreeTableModule,
     MenubarModule,
-
+    ProgressSpinnerModule,
     ButtonModule,
     DividerModule,
     PanelModule,
@@ -108,6 +112,7 @@ import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cu
     CalendarModule,
     InputSwitchModule,
     KnobModule,
+    OverlayPanelModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario

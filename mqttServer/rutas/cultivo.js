@@ -1,13 +1,11 @@
 const express = require('express');
 
 const Cultivos = express.Router(); 
- 
 const conectarBaseDeDatos =  require('./SQLite.js');
 
 const db = conectarBaseDeDatos();
 const util = require('util');
 const dbGetAsync = util.promisify(db.all).bind(db);
-
 
 
 
@@ -36,52 +34,63 @@ class Cultivo {
     }
   }
 
-  class HorarioRiego {
-    constructor(momento, minutos_on, minutos_off) {
-      this.momento = momento;
-      this.minutos_on = minutos_on;
-      this.minutos_off = minutos_off;
-    }
+  class datosCultivoActuales {
+
+    id_cultivo = 0;
+    fecha = new Date(0);
+   
+    dias_transcurridos = 0;
+    imagen = " ";
+    fecha_imagen = new Date(0);
+  
+    temperatura = 0;
+    humedad = 0;
+    luminosidad = 0;
+  
+    temperaturaSN = 0;
+    pH = 0;
+    EC = 0;
+    fecha_EC = new Date(0);
+  
   }
-  
-  const horario_madrugada = new HorarioRiego("madrugada", 10, 50 );
-  const horario_manana = new HorarioRiego("manana", 10, 30);
-  const horario_tarde = new HorarioRiego("tarde", 5, 5);
-  const horario_noche = new HorarioRiego("noche", 10, 40);
-  
-  const horarios_default = [horario_madrugada, horario_manana, horario_tarde, horario_noche];
-
-  function asignarValoresDesdeJSON(id_cultivo, Nombre, imagen , jsonObject, fecha_creacion) {
-
-    let cultivo = new Cultivo();
 
 
-    cultivo.id_cultivo = id_cultivo;
-    cultivo.Nombre = Nombre;
-    cultivo.imagen = imagen;
  
-    const json = JSON.parse(jsonObject); 
-
-    cultivo.rango_CE_min = json.rango_CE.minimo;
-    cultivo.rango_CE_max = json.rango_CE.maximo;
-
-    cultivo.rango_pH_min = json.rango_pH.minimo;
-    cultivo.rango_pH_max = json.rango_pH.maximo;
-
-    cultivo.rango_temperatura_SN_min = json.rango_temperatura_SN.minimo;
-    cultivo.rango_temperatura_SN_max = json.rango_temperatura_SN.maximo;
-
-    cultivo.rango_temperatura_min = json.rango_temperatura.minimo;
-    cultivo.rango_temperatura_max = json.rango_temperatura.maximo;
-
-    cultivo.rango_humedad_min = json.rango_humedad.minimo;
-    cultivo.rango_humedad_max = json.rango_humedad.maximo;
 
 
-    cultivo.Fecha_Creacion = fecha_creacion;
 
-    return cultivo;
-  }
+  
+  // function asignarValoresDesdeJSON(id_cultivo, Nombre, imagen , jsonObject, fecha_creacion) {
+
+  //   let cultivo = new Cultivo();
+
+
+  //   cultivo.id_cultivo = id_cultivo;
+  //   cultivo.Nombre = Nombre;
+  //   cultivo.imagen = imagen;
+ 
+  //   const json = JSON.parse(jsonObject); 
+
+  //   cultivo.rango_CE_min = json.rango_CE.minimo;
+  //   cultivo.rango_CE_max = json.rango_CE.maximo;
+
+  //   cultivo.rango_pH_min = json.rango_pH.minimo;
+  //   cultivo.rango_pH_max = json.rango_pH.maximo;
+
+  //   cultivo.rango_temperatura_SN_min = json.rango_temperatura_SN.minimo;
+  //   cultivo.rango_temperatura_SN_max = json.rango_temperatura_SN.maximo;
+
+  //   cultivo.rango_temperatura_min = json.rango_temperatura.minimo;
+  //   cultivo.rango_temperatura_max = json.rango_temperatura.maximo;
+
+  //   cultivo.rango_humedad_min = json.rango_humedad.minimo;
+  //   cultivo.rango_humedad_max = json.rango_humedad.maximo;
+
+
+  //   cultivo.Fecha_Creacion = fecha_creacion;
+
+  //   return cultivo;
+  // }
 
 
   function generarJSON(rangoCEMin, rangoCEMax, rangoPHMin, rangoPHMax, rangoTemperaturaSNMin, rangoTemperaturaSNMax, rangoTemperaturaMin, rangoTemperaturaMax, rangoHumedadMin, rangoHumedadMax) {
@@ -182,7 +191,6 @@ Cultivos.post('/Cultivos', async (req, res) => {
         const query_edita = `UPDATE Cultivos
         SET Nombre = '${Nombre}',
             Fecha_Creacion = '${fechaFormateada}',
-            imagen = '${imagen}',
             rango_CE_min = '${rango_CE_min}',
             rango_CE_max = '${rango_CE_max}',
             rango_pH_min = '${rango_pH_min}',
@@ -208,9 +216,9 @@ Cultivos.post('/Cultivos', async (req, res) => {
 
 
 
-      const query = `INSERT INTO Cultivos (Nombre, Fecha_Creacion, imagen, 
+      const query = `INSERT INTO Cultivos (Nombre, Fecha_Creacion, imagen,
         rango_CE_min,rango_CE_max, rango_pH_min, rango_pH_max, rango_temperatura_SN_min, rango_temperatura_SN_max, rango_temperatura_min, rango_temperatura_max,
-         rango_humedad_min, rango_humedad_max, fecha_creacion, rango_lux_min, rango_lux_max) VALUES ('${Nombre}', '${fechaFormateada}','${imagen}',
+         rango_humedad_min, rango_humedad_max, fecha_creacion, rango_lux_min, rango_lux_max) VALUES ('${Nombre}', '${fechaFormateada}', '${imagen}',
       '${rango_CE_min}','${rango_CE_max}','${rango_pH_min}','${rango_pH_max}','${rango_temperatura_SN_min}','${rango_temperatura_SN_max}','${rango_temperatura_min}','${rango_temperatura_max}','${rango_humedad_min}','${rango_humedad_max}','${fecha_creacion}', '${rango_lux_min}','${rango_lux_max}')`;
   
       const rows = await dbGetAsync(query);
@@ -219,15 +227,20 @@ Cultivos.post('/Cultivos', async (req, res) => {
           console.log("No hay insertados registros");
           res.status(400);;
       }else{
-  
-          console.log("Cultivo disponible insertado");
 
-          const query_id_cultivo = `SELECT id_cultivo FROM Cultivos WHERE Nombre = '${Nombre}' AND Fecha_Creacion = '${fechaFormateada}'`;
-          const id_cultivo = await dbGetAsync(query_id_cultivo);
+
+          const query_id_cultivo = `SELECT MAX(id_cultivo) FROM Cultivos WHERE Nombre = '${Nombre}' AND Fecha_Creacion = '${fechaFormateada}'`;
+          const row = await dbGetAsync(query_id_cultivo);
+          const id_cultivo = row[0]['MAX(id_cultivo)'];
+          const insertarImagenPredefinida =   `INSERT INTO imagenes (id_cultivo, imagen, fecha) VALUES ('${id_cultivo}', '${imagen}', '${fechaFormateada}')`;
+          const a = await dbGetAsync(insertarImagenPredefinida);
+
+          const query_creaEC = `INSERT INTO EC (id_cultivo, EC, fecha) VALUES ('${id_cultivo}', '0', '${fechaFormateada}')`;
+          console.log("Cultivo disponible insertado");
 
           for(let i=0; horarios_default.length > i; i++){
             const query_inserta_horario = "INSERT INTO HorariosRiego (id_cultivo, momento, minutos_on, minutos_off) VALUES (?, ?, ?, ?)";
-            const rows = await dbGetAsync(query_inserta_horario, [id_cultivo[id_cultivo.length-1].id_cultivo, horarios_default[i].momento, horarios_default[i].minutos_on, horarios_default[i].minutos_off]);
+            const rows = await dbGetAsync(query_inserta_horario, [id_cultivo,  horarios_default[i].momento,  horarios_default[i].minutos_on,  horarios_default[i].minutos_off]);
 
           }
       }
@@ -260,43 +273,116 @@ Cultivos.delete('/Cultivos', async (req, res) => {
     }
 })
 
+Cultivos.get('/datosActuales', async (req, res) => {
+  const id_cultivo = req.query.id_cultivo;
+  datosActuales = new datosCultivoActuales();
+
+  const query_datosActuales = `SELECT * FROM Datos_recogidos WHERE id_cultivo = '${id_cultivo}' ORDER BY fecha_hora DESC LIMIT 1;`; 
+  const ultimoRegistro = await dbGetAsync(query_datosActuales);
+  if(ultimoRegistro.length > 0){
+    datosActuales.humedad = ultimoRegistro[0].humedad;
+    datosActuales.temperatura = ultimoRegistro[0].temp_ambiente;
+    datosActuales.luminosidad = ultimoRegistro[0].luminosidad;
+    datosActuales.fecha = ultimoRegistro[0].fecha_hora;
+    datosActuales.pH = ultimoRegistro[0].pH;
+    datosActuales.temperaturaSN = ultimoRegistro[0].temp_SN;
+  }
+
+  const query_datosImagen = `SELECT * FROM imagenes WHERE id_cultivo = '${id_cultivo}' ORDER BY fecha DESC LIMIT 1;`; 
+  const ultimaImagen = await dbGetAsync(query_datosImagen);
+  if(ultimaImagen.length > 0){
+    datosActuales.imagen = ultimaImagen[0].imagen;
+    datosActuales.fecha_imagen = ultimaImagen[0].fecha;
+  }
+
+  const query_datosEC = `SELECT * FROM EC_medida WHERE id_cultivo = '${id_cultivo}' ORDER BY fecha DESC LIMIT 1;`;
+  const rows_EC = await dbGetAsync(query_datosEC);
+  if(rows_EC.length > 0){
+    datosActuales.EC = rows_EC[0].EC;
+  }
+
+  res.status(200).json(datosActuales);
+
+})
+
+Cultivos.post('/actualizarEC', async (req, res) => {
+
+  const id_cultivo = req.body.id_cultivo;
+  const EC = req.body.EC;
+  const fecha = req.body.fecha;
+  const query = `UPDATE EC_medida SET EC = '${EC}', fecha = '${fecha}' WHERE id_cultivo = '${id_cultivo}'`;
+  const rows = await dbGetAsync(query);
+  if(rows.length == 0){
+    res.status(400);
+  }else{
+    res.status(200);
+  }
+})
+
+
+
 
 
 //// horarios
 
 
+
+
+
+class HorarioRiego {
+  constructor(momento, minutos_on, minutos_off) {
+    this.momento = momento;
+    this.minutos_on = minutos_on;
+    this.minutos_off = minutos_off;
+  }
+}
+
+const horario_madrugada = new HorarioRiego("madrugada", 10, 50 );
+const horario_manana = new HorarioRiego("manana", 10, 30);
+const horario_tarde = new HorarioRiego("tarde", 5, 5);
+const horario_noche = new HorarioRiego("noche", 10, 40);
+
+const horarios_default = [horario_madrugada, horario_manana, horario_tarde, horario_noche];
+
+
+
+
+
 Cultivos.get('/Horarios', async (req, res) => {
 
-    const id = req.query.id_cultivo;
-    const query = `SELECT * FROM HorariosRiego WHERE id_cultivo = '${id}'`;
-    const rows = await dbGetAsync(query);
+  const id = req.query.id_cultivo;
+  const query = `SELECT * FROM HorariosRiego WHERE id_cultivo = '${id}'`;
+  const rows = await dbGetAsync(query);
 
-    if(rows.length == 0){
-        console.log("No hay registros");
-        res.status(400);
-    }else{
-        console.log("Registros encontrados");
-        res.status(200).json(rows);
-    }
-    
+  if(rows.length == 0){
+      console.log("No hay registros");
+      res.status(400);
+  }else{
+      console.log("Registros encontrados");
+      res.status(200).json(rows);
+  }
+  
 })
 
 Cultivos.post('/GuardaHorarios', async (req, res) => {
 
-    const id_cultivo = req.body.id_cultivo;
-    const horarios = req.body.horarios;
-    console.log("Guardando horarios", horarios, id_cultivo);
+const id_cultivo = req.body.id_cultivo;
+const horarios = req.body.horarios;
+console.log("Guardando horarios", horarios, id_cultivo);
 
-    const query_borra_horario = `DELETE FROM HorariosRiego WHERE id_cultivo = '${id_cultivo}'`;
-    const borrados = await dbGetAsync(query_borra_horario);
+const query_borra_horario = `DELETE FROM HorariosRiego WHERE id_cultivo = '${id_cultivo}'`;
+const borrados = await dbGetAsync(query_borra_horario);
 
-    for(let i=0; horarios.length > i; i++){
-      const query_inserta_horario = "INSERT INTO HorariosRiego (id_cultivo, momento, minutos_on, minutos_off) VALUES (?, ?, ?, ?)";
-      const rows = await dbGetAsync(query_inserta_horario, [id_cultivo, horarios[i].momento, horarios[i].minutos_on, horarios[i].minutos_off]);
-    } 
-
-
+for(let i=0; horarios.length > i; i++){
+  const query_inserta_horario = "INSERT INTO HorariosRiego (id_cultivo, momento, minutos_on, minutos_off) VALUES (?, ?, ?, ?)";
+  const rows = await dbGetAsync(query_inserta_horario, [id_cultivo, horarios[i].momento, horarios[i].minutos_on, horarios[i].minutos_off]);
+}
 })
+
+
+
+
+
 
  
 

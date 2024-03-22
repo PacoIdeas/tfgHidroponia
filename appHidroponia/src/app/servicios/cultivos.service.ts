@@ -23,7 +23,7 @@ export class CultivosService {
   cultivosPredefinidos: Cultivo[] = [];
   cultivosDisponibles: Cultivo[] = [];
   cultivoSeleccionado = this.cultivosDisponibles[0];
-
+  datosCultivoActuales: datosCultivoActuales = new datosCultivoActuales();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -62,9 +62,13 @@ export class CultivosService {
 
   getDatosCultivoActuales(id_cultivo: number): Observable<datosCultivoActuales> {
 
-    return this.http.get<datosCultivoActuales>(this.API_URI + "/CultivosActuales", { params: { id_cultivo: id_cultivo } });
+    return this.http.get<datosCultivoActuales>(this.API_URI + "/datosActuales", { params: { id_cultivo: id_cultivo } });
   }
 
+  postActualizarEC(id_cultivo: number, EC: number): Observable<any> {
+
+    return this.http.post<any>(this.API_URI + "/actualizarEC", { id_cultivo: id_cultivo, EC: EC });
+  }
 
 
 

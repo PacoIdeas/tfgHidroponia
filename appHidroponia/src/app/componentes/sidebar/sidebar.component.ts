@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
               }
             },
             {
-              label: 'Editar cultivo',
+              label: 'Cultivos activos',
               icon: 'pi pi-pencil',
               command: () => {
 

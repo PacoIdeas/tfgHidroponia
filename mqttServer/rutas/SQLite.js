@@ -14,20 +14,6 @@ function conectarBaseDeDatos() {
 
 module.exports = conectarBaseDeDatos;
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // const mariadb = require('mariadb');

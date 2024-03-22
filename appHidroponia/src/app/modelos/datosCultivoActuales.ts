@@ -3,8 +3,12 @@
 export class datosCultivoActuales {
 
   id_cultivo = 0;
-  Nombre = " ";
+  fecha = new Date();
+
+
+  dias_transcurridos = 0;
   imagen = " ";
+  fecha_imagen = new Date(0);
 
   temperatura = 0;
   humedad = 0;

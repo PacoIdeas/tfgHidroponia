@@ -1,10 +1,19 @@
 const mqtt = require('mqtt');
 const aedes = require('aedes')(); //serv mqtt
 const server = require('net').createServer(aedes.handle);
+const moduloRiegos = require('./horariosDeRiego').tiempo_on_off_actual_byIdCultivo
 
-const conectarBaseDeDatos =  require('./SQLite.js');
+require('dotenv').config();
 
+const t_camara_res = process.env.t_camara_res;
+const t_camara_pet = process.env.t_camara_pet;
+const t_datosRecopilados = process.env.t_datosRecopilados 
+const t_datosConfirmados = process.env.t_datosConfirmados
+
+const conectarBaseDeDatos =  require('./SQLite.js'); 
 const db = conectarBaseDeDatos();
+const util = require('util');
+const dbGetAsync = util.promisify(db.all).bind(db);
 
 const fs = require('fs');// trabajar con ficheros (foto)
 
@@ -25,11 +34,9 @@ const brokerUrl = 'mqtt://192.168.100.115'; // Dirección del broker MQTT
 
 
 
-const t_camara_res = "PICTURE";
-const t_camara_pet = "TakeAPicture";
-const t_hum_temp = "hum_temp_amb";
-const t_hum_temp_amb_res = "hum_temp_amb_res"
-const topics = ["topic/ejemplo",t_camara_res,t_camara_pet,t_hum_temp,t_hum_temp_amb_res]//////S
+
+
+const topics = ["topic/ejemplo",t_camara_res,t_camara_pet,t_datosRecopilados,t_datosConfirmados]//////S
 //publica TakeAPicture  ->  ESP32-CAM publica en PICTURE una foto 
 
 
@@ -45,64 +52,36 @@ client.on('connect', () => {
     //console.log(`Mensaje recibido en el topic ${topic}: ${message.toString()}`);
     
 
-    if (topic === t_camara_res) { // se recibe foto
-      if (message instanceof Buffer && message.length > 0) { //foto valida 
-        // Obtenemos los componentes de la fecha (día, mes y año)
-        let fechaActual = new Date();
-        let dia = String(fechaActual.getDate()).padStart(2, '0'); // Obtener el día (asegurándonos de que tenga dos dígitos)
-        let mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Obtener el mes (los meses empiezan desde 0)
-        let anio = fechaActual.getFullYear(); // Obtener el año
-        let fechaBonita = `${dia}-${mes}-${anio}`;// Formateamos la fecha como dd-mm-aaaa
 
-        const imagePath = `./captured_images/${fechaBonita}.jpg`; // Ruta donde se guardará la imagen
-     // console.log('lenght', message.length);
-        fs.writeFile(imagePath, message, (err) => {
-          if (err) {
-            console.error('Error al guardar la imagen:', err);
-          } else {
-            console.log('Imagen guardada en:', imagePath);
-            // Aquí puedes realizar cualquier otra operación con la imagen guardada
-          }
-        });
-      } else {
-        console.error('Mensaje recibido no es una imagen válida');
-      }
-    } // FIN 'PICTURE'
 
-    else if(topic === t_hum_temp){
+    if(topic === t_datosRecopilados){
       console.log(`Mensaje recibido en el topic ${topic}: ${message.toString()}`);
       try{
 
         const valores = obtenerParametros(message.toString());
 
         console.log("valores: " + valores);
-        client.publish(t_hum_temp_amb_res, 'ok');
+
+
+        const horarioRiego = await tiempo_on_off_actual_byIdCultivo(valores[0]);
+
+        client.publish(t_datosConfirmados, 'ok');
         console.log("enviado ok");
+
+
         
         const fecha_hora = formatDateToSQLDateTime();
         
         db.serialize(() => {
-          console.log(`Se insertó el temperatura: ${valores[0]}, humedad:  ${valores[1]}, light: ${valores[2]}, TemperaturaSN: ${valores[3]}`);
-          db.run('INSERT INTO Datos_ambientales (fecha_hora, temperatura, humedad, luminosidad) VALUES (?, ?, ?, ?);',[fecha_hora, valores[0], valores[1], valores[2] ], function(err) {
+
+          db.run('INSERT INTO Datos_recogidos (id_cultivo, fecha_hora, temp_ambiente, humedad, luminosidad, pH, temp_SN ) VALUES (?, ?, ?, ?, ?, ?, ?);',[valores[0], fecha_hora, valores[1], valores[2],valores[3],valores[4], valores[5] ], function(err) {
             if (err) {
-              return console.error(err.message);
+              return console.error(err.message); 
             }else{
-              console.log("datos ambientales insertados")
+              console.log(`Datos insertados del cultivo ${valores[0]} -> fecha_hora: ${fecha_hora}, temp_ambiente: ${valores[1]}, humedad: ${valores[2]}, light: ${valores[3]}, pH: ${valores[4]}, temp_SN: ${valores[5]}`);
             }
-  
           });
-
-          db.run('INSERT INTO Datos_SN (fecha_hora, temperatura) VALUES (?, ?);',[fecha_hora, valores[3] ], function(err) {
-            if (err) {
-              return console.error(err.message);
-            }else{
-              console.log("datos SN insertados")
-            } 
-            
-          });
-       
-
-        }); 
+        });  
 
   
       }catch(error){
@@ -119,6 +98,38 @@ client.on('connect', () => {
   //  // client.publish('topic/camara', 'Mensaje desde Node.js');
   // }, 10000); // Publica cada 5 segundos
 });
+
+client.peticionDeImagen = (callback) => {
+  client.subscribe(topics); // Suscripción al tema necesario
+  client.publish(t_camara_pet, 'Mensaje desde Node.js');
+
+  client.on('message', async (topic, message) => {
+    if (topic === t_camara_res) { // se recibe foto
+      if (message instanceof Buffer && message.length > 0) { //foto valida 
+        let fechaActual = new Date();
+        let dia = String(fechaActual.getDate()).padStart(2, '0');
+        let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+        let anio = fechaActual.getFullYear();
+        let fechaBonita = `${dia}-${mes}-${anio}`;
+
+        const nombreFoto = `${fechaBonita}.jpg`;
+        const imagePath = `./imagenes/${nombreFoto}`;
+
+        fs.writeFile(imagePath, message, (err) => {
+          if (err) {
+            console.error('Error al guardar la imagen:', err);
+          } else {
+            console.log('Imagen guardada en:', imagePath);
+          
+            callback(nombreFoto);
+          }
+        });
+      } else {
+        console.error('Mensaje recibido no es una imagen válida');
+      }
+    } 
+  });
+};
 
 
 
@@ -159,7 +170,39 @@ server.on('published', (packet, client) => {
 
 
 
+function obtenerIntervaloHorario() {
+  // Obtén la hora actual
+  var horaActual = new Date().getHours();
 
+  // Comprueba a qué intervalo horario pertenece
+  if (horaActual >= 1 && horaActual < 6) {
+    return "madrugada";
+  } else if (horaActual >= 6 && horaActual < 12) {
+    return "mañana";
+  } else if (horaActual >= 12 && horaActual < 18) {
+    return "tarde";
+  } else {
+    return "noche";
+  }
+}
+
+
+
+async function tiempo_on_off_actual_byIdCultivo(id_cultivo){
+  try{
+    const intervaloHorario = obtenerIntervaloHorario(); // Madrugada, Mañana, Tarde, Noche
+    const query = `SELECT * FROM HorariosRiego WHERE id_cultivo = '${id_cultivo}' AND momento = '${intervaloHorario}'`;
+    const rows = await dbGetAsync(query); 
+    return rows;
+  }catch(error){
+    console.error('Error al publicar:', error);
+  }
+
+}
+
+
+
+ 
 
 
 module.exports = client; // Exporta el cliente MQTT

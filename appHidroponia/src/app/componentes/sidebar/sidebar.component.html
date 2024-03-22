@@ -4,12 +4,9 @@
 <p-sidebar [(visible)]="this.cultivosService.sidebarVisible" >
 
   <div class="card flex justify-content-center">
+
     <ng-container *ngIf="this.cultivosService.cultivoSeleccionado?.imagen">
-      <img
-        src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}"
-        [alt]="this.cultivosService.cultivoSeleccionado.imagen"
-        class="w-6rem h-6rem shadow-2"
-      />
+      <p-image  src="http://localhost:3000/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" height="120px" width="120px" [preview]="true"></p-image>
     </ng-container> </div>
 
   <div class="card flex justify-content-center ">

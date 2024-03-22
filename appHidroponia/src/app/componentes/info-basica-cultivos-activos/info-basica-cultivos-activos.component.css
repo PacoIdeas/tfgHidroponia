@@ -1,0 +1,9 @@
+.vertical-line {
+  position: absolute;
+
+  left: 40%; /* Ajusta el posicionamiento horizontal según tus necesidades */
+  width: 1px;
+  height: 50%;
+
+  background-color: black; /* Puedes cambiar el color según tus preferencias */
+}
