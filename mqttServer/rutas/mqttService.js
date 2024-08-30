@@ -2,6 +2,7 @@ const mqtt = require('mqtt');
 const aedes = require('aedes')(); //serv mqtt
 const server = require('net').createServer(aedes.handle);
 const moduloRiegos = require('./horariosDeRiego').tiempo_on_off_actual_byIdCultivo
+const imagenes = require('./imagenes')
 
 require('dotenv').config();
 
@@ -26,19 +27,13 @@ server.listen(port, () => {
 
 
 const brokerUrl = 'mqtt://192.168.100.115'; // Dirección del broker MQTT
-// const options = {
-//   clientId: 'nodejs-client', // Identificador del cliente
-//   username: 'tu_usuario', // Usuario (si es necesario)sadasd
-//   password: 'tu_contraseña' // Contraseña (si es necesario)
-// };
-
+ 
 
 
 
 
 const topics = ["topic/ejemplo",t_camara_res,t_camara_pet,t_datosRecopilados,t_datosConfirmados]//////S
-//publica TakeAPicture  ->  ESP32-CAM publica en PICTURE una foto 
-
+ 
 
 const client = mqtt.connect(brokerUrl);
 
@@ -46,16 +41,22 @@ client.on('connect', () => {
  // client.on('connect', async(req,res)  => {
   console.log('Conectado al broker MQTT');
 
-  client.subscribe(topics); // Suscripción al tema necesario
+  client.subscribe(topics, (err) => {
+    if (!err) {
+      console.log('Suscripción exitosa a los tópicos:', topics);
+    } else {
+      console.error('Error al suscribirse:', err);
+    }
+  });
 
   client.on('message', async (topic, message) => {
-    //console.log(`Mensaje recibido en el topic ${topic}: ${message.toString()}`);
+    console.log(`Mensaje recibido en el topic ${topic}: ${message.toString()}`);
     
 
 
 
     if(topic === t_datosRecopilados){
-      console.log(`Mensaje recibido en el topic ${topic}: ${message.toString()}`);
+      console.log(`Mensaje recibido en el topic ${topic}`);
       try{
 
         const valores = obtenerParametros(message.toString());
@@ -88,6 +89,45 @@ client.on('connect', () => {
         console.error('Error al publicar:', error);
       }
     }
+    if (topic === t_camara_res) { // se recibe foto
+      try{
+        console.log(`Foto recibida en el topic ${topic}`);
+        if (message instanceof Buffer && message.length > 0) { //foto valida 
+
+          let fechaActual = new Date();
+          let dia = String(fechaActual.getDate()).padStart(2, '0');
+          let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+          let anio = fechaActual.getFullYear();
+          let hora = String(fechaActual.getHours()).padStart(2, '0');
+          let minuto = String(fechaActual.getMinutes()).padStart(2, '0');
+          let fechaBonita = `${dia}-${mes}-${anio}_${hora}-${minuto}`;
+          let idCultivo = 1;
+
+
+
+          const nombreFoto = `${idCultivo}_${fechaBonita}.jpg`;
+          const imagePath = `./imagenes/${nombreFoto}`;
+    
+          fs.writeFile(imagePath, message, (err) => {
+            if (err) {
+              console.error('Error al guardar la imagen:', err);
+            } else {
+              console.log('Imagen guardada en:', imagePath);
+              if (typeof client.imageCallback === 'function') {
+                client.imageCallback(nombreFoto);
+
+              }
+            }
+          });
+          await imagenes.actualizaNombreFotoEnBD(idCultivo, nombreFoto);
+        } else {
+          console.error('Mensaje recibido no es una imagen válida');
+        }
+      }catch(error){
+        console.error('Error al publicar:', error);
+      }
+
+    } 
 
 
   });
@@ -99,36 +139,12 @@ client.on('connect', () => {
   // }, 10000); // Publica cada 5 segundos
 });
 
+
+
+
 client.peticionDeImagen = (callback) => {
-  client.subscribe(topics); // Suscripción al tema necesario
+  client.imageCallback = callback;
   client.publish(t_camara_pet, 'Mensaje desde Node.js');
-
-  client.on('message', async (topic, message) => {
-    if (topic === t_camara_res) { // se recibe foto
-      if (message instanceof Buffer && message.length > 0) { //foto valida 
-        let fechaActual = new Date();
-        let dia = String(fechaActual.getDate()).padStart(2, '0');
-        let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
-        let anio = fechaActual.getFullYear();
-        let fechaBonita = `${dia}-${mes}-${anio}`;
-
-        const nombreFoto = `${fechaBonita}.jpg`;
-        const imagePath = `./imagenes/${nombreFoto}`;
-
-        fs.writeFile(imagePath, message, (err) => {
-          if (err) {
-            console.error('Error al guardar la imagen:', err);
-          } else {
-            console.log('Imagen guardada en:', imagePath);
-          
-            callback(nombreFoto);
-          }
-        });
-      } else {
-        console.error('Mensaje recibido no es una imagen válida');
-      }
-    } 
-  });
 };
 
 

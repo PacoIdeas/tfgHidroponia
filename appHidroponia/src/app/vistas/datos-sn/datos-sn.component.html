@@ -1,0 +1,39 @@
+<app-cabecera></app-cabecera>
+
+<div class="card flex; flex-direction: column; justify-content: space-between; align-items: center">
+<p-toast></p-toast>
+
+<p-panel header="Datos atmosféricos" class="panel-con-fondo" [style]="{ width: '70%', margin: 'auto' }">
+  <div class="card flex justify-content-center">
+      <!-- <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  /> -->
+      <p-image [src]="'http://localhost:3000/imagenes/' + this.cultivosService.cultivoSeleccionado.imagen " [alt]="this.cultivosService.cultivoSeleccionado.imagen" height="120px" width="120px" [preview]="true"></p-image>
+      <!-- + '?nocache=' + getNoCacheParam()  mirar en home -->
+    </div>
+
+    <div class="card flex justify-content-center">
+      <p-dropdown [options]="cultivosService.cultivosDisponibles"
+                  [(ngModel)]="cultivosService.cultivoSeleccionado"
+                  optionLabel="Nombre"
+                  [style]="{'width': '100%', 'margin-top': '20px'}"
+                  (onChange)="onDropdownChange($event,cultivosService.cultivoSeleccionado )">
+      </p-dropdown>
+    </div>
+     <p></p>
+
+     <div *ngIf="this.cargados; else otroContenido">
+      <p-card *ngIf="this.cargados"	 header="Grafica diaria" styleClass="p-card-shadow" [style]="{width: '100%'}">
+        <app-grafica-datos [datosRecogidos]="datosPH"></app-grafica-datos>
+        <app-grafica-datos [datosRecogidos]="datosTemperatura_PH"></app-grafica-datos>
+      </p-card>
+    </div>
+
+    <ng-template #otroContenido>
+      <p>El cultivo seleccionado no tiene datos actualmente</p>
+    </ng-template>
+
+
+
+
+
+  </p-panel>
+</div>

@@ -30,9 +30,22 @@ export class CultivosPredeterminadosComponent {
   }
 
 
-  cultivoPredefinidoSeleccionado(cultivoPredefSelec: Cultivo){
-    this.cultivosService.cultivosDisponibles[this.cultivosService.cultivosDisponibles.length] = cultivoPredefSelec
-    cultivoPredefSelec.Fecha_Creacion = new Date();
+  cultivoPredefinidoSeleccionado(cultivoPredefSelec: Cultivo){// nuevo cultivo
+    cultivoPredefSelec.id_cultivo = 0;
+    this.cultivosService.cultivosDisponibles[this.cultivosService.cultivosDisponibles.length] = cultivoPredefSelec;
+
+    // Primero, generas la cadena en formato 'YYYY-MM-DD'
+    var fechaActual = new Date();
+    var year = fechaActual.getFullYear();
+    var month = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+    var day = fechaActual.getDate().toString().padStart(2, '0');
+
+    // Formatear la fecha como 'YYYY-MM-DD'
+    var fechaFormateada = `${year}-${month}-${day}`;
+
+    // Convertir la cadena 'YYYY-MM-DD' a un objeto Date
+    cultivoPredefSelec.Fecha_Creacion = new Date(fechaFormateada);
+    console.log(cultivoPredefSelec.Fecha_Creacion);
 
     this.cultivosService.add_eddit_cultivo(cultivoPredefSelec).subscribe((res: any) => {
 
@@ -44,7 +57,7 @@ export class CultivosPredeterminadosComponent {
           this.cultivosService.cultivosDisponibles = data;
         }
       )
-    }, 200);
+    }, 500);
 
 
     this.messageService.add({ severity: 'success', summary: 'Cultivo creado', detail: `Nombre: ${cultivoPredefSelec.Nombre}` });

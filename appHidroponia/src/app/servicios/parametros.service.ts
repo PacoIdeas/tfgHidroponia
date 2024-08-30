@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 
 import { Notificacion } from '../modelos/notificaciones';
 
-
+import { InfoNotificaciones } from '../modelos/info_notificaciones';
 
 
 
@@ -53,13 +53,22 @@ export class ParametrosService {
 
 
 
-  getNotificacionesActivas(id_cultivo: number): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.API_URI}/NotificacionesActivas`, { params: { id_cultivo: id_cultivo } });
+
+  getNotificacionesActivas(id_cultivo: number): Observable<Notificacion[]> { //devuelve las notificaciones que desea escuchar actualmente el usuario
+    return this.http.get<Notificacion[]>(`${this.API_URI}/notificaciones`, { params: { id_cultivo: id_cultivo } });
+  }
+
+  getInfoNotificaciones(id_cultivo: number): Observable<InfoNotificaciones[]> {  //devuelve las notificaciones que han saltado
+    return this.http.get<InfoNotificaciones[]>(`${this.API_URI}/infoNotificaciones`, { params: { id_cultivo: id_cultivo } });
   }
 
   postGuardaNotificaciones(id_cultivo: number, notificaciones: Notificacion[]): Observable<Notificacion[]> {
     return this.http.post<Notificacion[]>(`${this.API_URI}/GuardaNotificaciones`, { id_cultivo: id_cultivo, notificaciones: notificaciones });
 
+  }
+
+  putNotificacionesVistas(id_cultivo: number, notificacionesVistas: InfoNotificaciones[]) {
+    return this.http.put<Notificacion[]>(`${this.API_URI}/notificacionesVistas`, { id_cultivo: id_cultivo, notificacionesVistas: notificacionesVistas });
   }
 
 

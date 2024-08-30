@@ -11,7 +11,8 @@ import { AddEditCultivoComponent } from './vistas/add-edit-cultivo/add-edit-cult
 import { ParametrosComponent } from './vistas/parametros/parametros.component';
 import { AlertasComponent } from './vistas/alertas/alertas.component';
 import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/programacion-horaria.component';
-
+import { DatosAtmosfericosComponent } from './vistas/datos-atmosfericos/datos-atmosfericos.component';
+import { DatosSNComponent } from './vistas/datos-sn/datos-sn.component';
 
 
 
@@ -22,7 +23,7 @@ const routes: Routes = [
    {
     path: "home",
     component: AdminComponent,
-    canActivate:[AuthGuardService],
+   // canActivate:[AuthGuardService],
    },
   {
    path: "add-edit-cultivo",
@@ -42,8 +43,18 @@ const routes: Routes = [
   {
    path: "programacion-horaria",
    component: ProgramacionHorariaComponent,
-   canActivate:[AuthGuardService],
+  // canActivate:[AuthGuardService],
   },
+  {
+    path: "datos-atmosfericos",
+    component: DatosAtmosfericosComponent,
+   // canActivate:[AuthGuardService],
+   },
+   {
+    path: "datos-sn",
+    component: DatosSNComponent,
+    //canActivate:[AuthGuardService],
+   },
 
    {path: '**', redirectTo: ''}
 ];

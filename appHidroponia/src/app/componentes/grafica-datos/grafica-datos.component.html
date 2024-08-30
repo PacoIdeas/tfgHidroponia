@@ -1,0 +1,21 @@
+<div style="display: flex; flex-direction: column; justify-content: center;">
+  <p-chart type="line" [data]="data" [options]="options"></p-chart>
+</div>
+
+<!-- Tabla que se muestra cuando se selecciona un día -->
+<div *ngIf="diaSeleccionado">
+  <p-table [value]="datosRecogidosPorDia">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Momento</th>
+              <th>Valor</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dato>
+          <tr>
+              <td>{{ dato.momento | date: 'short' }}</td>
+              <td>{{ dato.valor }}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>

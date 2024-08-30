@@ -4,7 +4,7 @@
 
 
 
-  <p-panel header="Notidicaciones de email" >
+  <p-panel header="Notidicaciones" >
     <div class="card flex justify-content-center">
       <img src="../../assets/imagenes/{{ this.cultivosService.cultivoSeleccionado.imagen }}" [alt]="this.cultivosService.cultivoSeleccionado.imagen" class="w-6rem h-6rem shadow-2"  />
     </div>
@@ -21,17 +21,7 @@
     <div class="linea-divisoria"></div>
 
 
-    <p-panel [toggleable]="true" [collapsed] = "true">
-      <ng-template pTemplate="header">
-        <div class="flex align-items-center gap-2">
-            <p-inputSwitch [(ngModel)]="checked_diaria" (onChange)="onSwitchChange($event)"></p-inputSwitch>
-            <span style="margin-left: 10px;" class="font-bold">Informacion diaria.</span>
-        </div>
-      </ng-template>
-      <p class="m-0">
-          Esta notificacion enviara a su correo un resumen de los datos recopilados durante el dia.
-      </p>
-    </p-panel>
+
 
     <p-panel [toggleable]="true" [collapsed] = "true">
       <ng-template pTemplate="header">
@@ -81,10 +71,33 @@
           Enviará la notificacion una vez las lecturas de la humedad ambiental salgan del rango  [{{this.cultivosService.cultivoSeleccionado.rango_humedad_min}} - {{this.cultivosService.cultivoSeleccionado.rango_humedad_max}}] %.
       </p>
     </p-panel>
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_diaria" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">Luminosidad.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+        Enviará la notificacion una vez las lecturas de la luminosidad ambiental salgan del rango.
+      </p>
+    </p-panel>
+    <p-panel [toggleable]="true" [collapsed] = "true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <p-inputSwitch [(ngModel)]="checked_diaria" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+            <span style="margin-left: 10px;" class="font-bold">Temperatura SN.</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+        Enviará la notificacion una vez las lecturas de la temperatura SN cuando salgan del rango.
+      </p>
+    </p-panel>
+
 
     <div style="display: flex; justify-content: flex-end; margin-top: 20px;" >
       <p-button (click)="guardar_notificaciones()" icon="pi pi-check" label="Guardar"  [hidden]="!this.visible_guarda_cancela"></p-button>
-      <p-button (click)="restablece_notificaciones()" icon="pi pi-check" label="Cancelar"  [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}">></p-button>
+      <p-button (click)="restablece_notificaciones()" icon="pi pi-times" label="Cancelar"  [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}"></p-button>
     </div>
 
   </p-panel>

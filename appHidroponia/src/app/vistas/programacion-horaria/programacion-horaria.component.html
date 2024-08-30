@@ -73,7 +73,7 @@
 
       </p-card>
 
-      <p-card header="Noche 18:00 - :00" [style]="{ 'background-color': '#f3fff0', 'margin-left': '20px', 'size': '10%'}" >
+      <p-card header="Noche 18:00 - 00:00" [style]="{ 'background-color': '#f3fff0', 'margin-left': '20px', 'size': '10%'}" >
 
         <div class="p-inputgroup " style="display: flex; flex-direction: column; justify-content: center; align-items: center " >
           <div style="display: flex; flex-direction: row; justify-content: center; align-items: center " >
@@ -91,8 +91,8 @@
     </div>
 
     <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 20px " >
-      <p-button label="Guardar cambios" (onClick)="guardarCambios()" [hidden]="!this.visible_guarda_cancela"  ></p-button>
-      <p-button label="Cancelar" (onClick)="cancelar()" [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}"></p-button>
+      <p-button label="Guardar cambios" (onClick)="guardarCambios()" icon="pi pi-check" [hidden]="!this.visible_guarda_cancela"  ></p-button>
+      <p-button label="Cancelar" (onClick)="cancelar()" icon="pi pi-times" [hidden]="!this.visible_guarda_cancela" severity="danger" [ngStyle]="{'margin-left': '20px'}"></p-button>
     </div>
 
 

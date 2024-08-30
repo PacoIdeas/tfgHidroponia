@@ -68,6 +68,7 @@ export class SidebarComponent implements OnInit {
               icon: 'pi pi-info-circle',
               command: () => {
                 //   this.update();
+                this.router.navigateByUrl("datos-atmosfericos");
                 this.cultivosService.sidebarVisible = false;
               }
             },
@@ -75,7 +76,7 @@ export class SidebarComponent implements OnInit {
               label: 'Datos de la solucion nutritiva',
               icon: 'pi pi-info-circle',
               command: () => {
-
+                this.router.navigateByUrl("datos-sn");
                 this.cultivosService.sidebarVisible = false;
               }
             },

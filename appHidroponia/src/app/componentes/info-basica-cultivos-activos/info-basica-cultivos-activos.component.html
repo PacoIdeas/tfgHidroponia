@@ -7,13 +7,48 @@
     <p-card [style]="{ border: '1px solid #2d2d2d', position: 'relative' }" >
       <div style="display: flex; flex-direction: row;">
         <h2>Cultivo: {{ this.cultivoActivoSeleccionado.Nombre }}</h2>
+<!-- Mostrar notificaciones en la esquina -->
+        <div style="position: absolute; top: 30px; right: 10px;">
+          <ng-container *ngIf="this.notificacionesNuevas>0">
+            <i class="pi pi-bell mr-4 p-text-primary clickable-icon"
+               (click)="this.mostrarNoficacionesFunction()"
+               pBadge
+               style="font-size: 2rem; cursor: pointer"
+               [value]="notificacionesNuevas.toString()"
+               severity="success"
+               >
 
-        <div style=" justify-content: flex-end; margin-left: 300px;">
-          <!-- <i class="pi pi-trash clickable-icon" (click)="2"></i>
-          <i class="pi pi-plus clickable-icon" (click)="2"></i> -->
-          <i class="pi pi-bell mr-4 p-text-secondary clickable-icon" (click)="2" pBadge style="font-size: 2rem" value="2"></i>
-          <i class="pi pi-calendar mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="10" severity="danger"></i>
-          <i class="pi pi-envelope p-text-secondary" pBadge style="font-size: 2rem" severity="danger"></i>
+            </i>
+          </ng-container>
+
+          <ng-container *ngIf="notificacionesNuevas == 0">
+            <i class="pi pi-bell mr-4  clickable-icon"
+               (click)="mostrarNoficaciones = true"
+               style="font-size: 2rem; cursor: pointer">
+            </i>
+          </ng-container>
+       <p-dialog header="Header" [(visible)]="mostrarNoficaciones" [style]="{width: '75%'}">
+        <p-table [value]="notificaciones" [paginator]="true" [rows]="10" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+
+              <th>ID Cultivo</th>
+              <th>Mensaje</th>
+              <th>Fecha y Hora de Notificación</th>
+              <th>Fecha y Hora Vista</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-notificacion>
+            <tr>
+              <td>{{ notificacion.id_cultivo }}</td>
+              <td>{{ notificacion.mensaje }}</td>
+              <td>{{ notificacion.fechaHoraNotificacion | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td>{{ notificacion.fechaHoraVista ? (notificacion.fechaHoraVista | date: 'yyyy-MM-dd HH:mm:ss') : 'new!!' }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        </p-dialog>
+
         </div>
       </div>
       <div style="display: flex; flex-direction: row; justify-content: space-between; ">
@@ -23,22 +58,17 @@
               <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
             </div>
             <ng-template #imagen>
-
-
-              <p-image  src="http://localhost:3000/imagenes/{{ this.cultivosService.datosCultivoActuales.imagen }}" [alt]="this.cultivosService.datosCultivoActuales.imagen" height="120px" width="120px" [preview]="true"></p-image>
+            <p-image *ngIf="cargando_imagen == false" [src]="'http://localhost:3000/imagenes/' + this.cultivoActivoSeleccionado.imagen + '?nocache=' + getNoCacheParam()" [alt]="this.cultivoActivoSeleccionado.imagen" height="170px" width="170px" [preview]="true"></p-image>
             </ng-template>
-          <div style="margin-top: 20px;"></div>
-          <a (click)="actualizaImagen(this.cultivoActivoSeleccionado.id_cultivo)" (mouseover)="op.toggle($event)" (mouseout)="op.toggle($event)" style="display: flex; align-items: center; font-size: 1.2rem; color: #4da0ff; cursor: pointer;" >
-            <i class="pi pi-eye" style="margin-right: 5px;"></i>
-            Actualizar foto
-          </a>
+
+
           <p-overlayPanel #op [style]="{background: '#dcdcdc'}">
-              Ultima actualizacion: {{ this.cultivosService.datosCultivoActuales.fecha }}
+              Ultima actualizacion: {{ this.cultivosService.datosCultivoActuales.fecha_imagen }}
           </p-overlayPanel>
 
         </div>
 
-        <div style="display: flex; flex-direction: column; align-items: center; width: 10%; margin-right: 90px; height: 10%; ; border-radius: 10px; background-color: #dcdcdc; padding: 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 10%; margin-right: 90px; height: 10%; ; border-radius: 10px; background-color: #dcdcdc; padding: 10px; margin-top: 30px;">
           <h3>DIA:</h3>
           <h1>{{ this.cultivosService.datosCultivoActuales.dias_transcurridos }}</h1>
          <div class="vertical-line"></div>
@@ -53,7 +83,7 @@
 
           <div style="border-radius: 10px;  background-color: #0bd741; padding: 10px;" >
             <p-confirmPopup></p-confirmPopup>
-            <p style="margin: 0; line-height: 2;">EC: {{ this.cultivosService.datosCultivoActuales.EC }}
+            <p style="margin: 0; line-height: 2;">Ec: {{ this.cultivosService.datosCultivoActuales.EC }} uS/cm3
               <a (click)="verActualizarEC()" (mouseover)="infoEC.toggle($event)" (mouseout)="infoEC.toggle($event)" style="font-size: 1.2rem; color: #0000fb; cursor: pointer;" >
                 <i class="pi pi-pencil" style="margin-right: 5px;"></i>
               </a>
@@ -61,11 +91,13 @@
             <p-overlayPanel #infoEC [style]="{background: '#dcdcdc'}">
               Ultima actualizacion: {{ this.cultivosService.datosCultivoActuales.fecha_EC }}
             </p-overlayPanel>
-            <p-dialog header="Actualizar valor de salinidad EC" [(visible)]="visibleEditarEC" [style]="{width: '50vw'}">
+            <p-dialog header="Actualizar valor de salinidad EC" [(visible)]="visibleEditarEC" [closable]="false" [style]="{width: '30vw'}">
 
-              <p-inputNumber [(ngModel)]="this.cultivosService.datosCultivoActuales.EC" mode="decimal"></p-inputNumber>
-              <p-footer>
-                <button type="button" pButton icon="pi pi-check" (click)="actualizaEC(this.cultivoActivoSeleccionado.id_cultivo)" label="Actualizar"></button>
+              <p-inputNumber [(ngModel)]="this.cultivosService.datosCultivoActuales.EC" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="3"></p-inputNumber>
+              <p-footer style="display: flex; justify-content: space-between;">
+                <p-button  severity="danger" icon="pi pi-times" (click)="cancelaActualizaEC() " label="Cancelar"></p-button>
+                <p-button  severity="success" icon="pi pi-check" (click)="actualizaEC(this.cultivoActivoSeleccionado.id_cultivo)" label="Actualizar"></p-button>
+
               </p-footer>
             </p-dialog>
 

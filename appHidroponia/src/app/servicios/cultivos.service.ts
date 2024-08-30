@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../modelos/usuario';
-
+import { Notificacion } from '../modelos/notificaciones';
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -17,13 +17,30 @@ export class CultivosService {
 
   API_URI = 'http://localhost:3000';
 
-
+  notificaciones: Notificacion[] = [];
   sidebarVisible: boolean = false;
 
   cultivosPredefinidos: Cultivo[] = [];
   cultivosDisponibles: Cultivo[] = [];
   cultivoSeleccionado = this.cultivosDisponibles[0];
-  datosCultivoActuales: datosCultivoActuales = new datosCultivoActuales();
+  datosCultivoActuales: datosCultivoActuales ={
+
+    id_cultivo: 0,
+    fecha: new Date(0),
+
+    dias_transcurridos: 0,
+    imagen: " ",
+    fecha_imagen: new Date(0),
+
+    temperatura: 0,
+    humedad: 0,
+    luminosidad: 0,
+
+    temperaturaSN: 0,
+    pH: 0,
+    EC: 0.0,
+    fecha_EC: new Date(0),
+  }
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -70,7 +87,12 @@ export class CultivosService {
     return this.http.post<any>(this.API_URI + "/actualizarEC", { id_cultivo: id_cultivo, EC: EC });
   }
 
+  getHistorialDeDatos(id_cultivo: number): Observable<any> {
+    return this.http.get<any>(this.API_URI + "/historial", { params: { id_cultivo: id_cultivo } });
+  }
 
-
+  // getNotificaciones (id_cultivo: number): Observable<any> {
+  //   return this.http.get<any>(this.API_URI + "/notificaciones", { params: { id_cultivo: id_cultivo } })
+  // }
 
 }

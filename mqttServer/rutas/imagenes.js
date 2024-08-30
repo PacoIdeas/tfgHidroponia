@@ -17,6 +17,7 @@ require('dotenv').config();
  
 Imagenes.get('/ImagenActual', async (req, res) => {
   try {
+    console.log("Solicitud de imagen a la ESP32-CAM");
     const id_cultivo = req.query.id_cultivo;
     const fecha = new Date();
  
@@ -30,17 +31,9 @@ Imagenes.get('/ImagenActual', async (req, res) => {
     const eliminada = await dbGetAsync(borrarImagen, [id_cultivo, fechaFormateada]);
 
  
-    const rutaArchivo = path.join(__dirname, '../imagenes', fechaFormateada+'.jpg'); // Reemplaza 'ruta_a_la_carpeta' con la ruta real de la carpeta
+    const rutaArchivo = path.join(__dirname, '../imagenes', fechaFormateada+'.jpg');  
 
-    fs.unlink(rutaArchivo, (error) => {
-      if (error) {
-        console.error('Error al eliminar el archivo:', error);
-        // return;
-      }
-      console.log('Archivo eliminado con éxito.');
-    });
- 
-    console.log("Solicitud de imagen a la ESP32-CAM");
+  
     const nombreFoto = await new Promise((resolve, reject) => {
       mqttClient.peticionDeImagen((nombreFoto) => {
         console.log('Nombre de la foto:', nombreFoto);
@@ -64,7 +57,20 @@ Imagenes.get('/ImagenActual', async (req, res) => {
     console.log(error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
-});
+})
+
+Imagenes.actualizaNombreFotoEnBD = async (id_cultivo, imagen) => {
+
+    const query = 'UPDATE cultivos SET imagen = ? WHERE id_cultivo = ?';
+    const rows = await dbGetAsync(query, [imagen, id_cultivo]);
+    if (rows.length > 0) {
+      console.log("No hay registros");
+      return false;
+    } else {
+      console.log("Registros insertados");
+      return true;
+    }
+}
 
 
 

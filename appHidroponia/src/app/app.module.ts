@@ -64,6 +64,9 @@ import { ParametrosComponent } from './vistas/parametros/parametros.component';
 import { AlertasComponent } from './vistas/alertas/alertas.component';
 import { ProgramacionHorariaComponent } from './vistas/programacion-horaria/programacion-horaria.component';
 import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cultivos-activos/info-basica-cultivos-activos.component';
+import { DatosAtmosfericosComponent } from './vistas/datos-atmosfericos/datos-atmosfericos.component';
+import { DatosSNComponent } from './vistas/datos-sn/datos-sn.component';
+import { GraficaDatosComponent } from './componentes/grafica-datos/grafica-datos.component';
 
 
 
@@ -80,6 +83,9 @@ import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cu
     AlertasComponent,
     ProgramacionHorariaComponent,
     InfoBasicaCultivosActivosComponent,
+    DatosAtmosfericosComponent,
+    DatosSNComponent,
+    GraficaDatosComponent,
 
 
   ],
@@ -113,6 +119,7 @@ import { InfoBasicaCultivosActivosComponent } from './componentes/info-basica-cu
     InputSwitchModule,
     KnobModule,
     OverlayPanelModule,
+    ChartModule,
     JwtModule.forRoot({
       config: {
         // Configuración opcional para el manejo de tokens JWT, si es necesario

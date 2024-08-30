@@ -5,6 +5,7 @@ import { CultivosService } from 'src/app/servicios/cultivos.service';
 import { Cultivo } from 'src/app/modelos/cultivo';
 
 import { MessageService } from 'primeng/api';
+import { timestamp } from 'rxjs';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -17,17 +18,13 @@ import { MessageService } from 'primeng/api';
 export class AdminComponent implements OnInit{
 
   cultivos!: Cultivo[];
-
+  recagando_imagen = false;
 
   laziLoadOnInit: boolean = false;
   constructor(private autentificacionService: AutentificacionService, private messageService: MessageService, public comunesService: ComunesService, public cultivosService: CultivosService) {
 
 
   }
-
-
-
-
 
 
 
